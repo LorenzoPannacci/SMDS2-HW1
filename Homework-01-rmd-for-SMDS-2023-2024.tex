@@ -1,0 +1,621 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{transparent}
+\usepackage[utf8]{inputenx}
+\usepackage{iwona}
+\usepackage{tikz}
+\usepackage{dcolumn}
+\usepackage{color}
+\usepackage[italian]{babel}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{tocloft}
+\usepackage{eso-pic}
+\geometry{verbose,tmargin=5cm,bmargin=3.5cm,lmargin=2.5cm,rmargin=2.5cm}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Homework \#01},
+  pdfauthor={SMDS-2023-2024},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Homework \#01}
+\author{SMDS-2023-2024}
+\date{\textsc{\textbf{\Large Statstical Methods in Data Science II a.y. 2022-2023}}\\
+\strut \\
+M.Sc. in Data Science\\
+\strut \\
+\underline{deadline: April 26th, 2024}}
+
+\begin{document}
+\maketitle
+
+\hypertarget{a.-simulation}{%
+\subsection{A. Simulation}\label{a.-simulation}}
+
+\hypertarget{consider-the-following-joint-discrete-distribution-of-a-random-vector-yz-taking-values-over-the-bi-variate-space}{%
+\subsubsection{\texorpdfstring{1. Consider the following joint discrete
+distribution of a random vector \((Y,Z)\) taking values over the
+bi-variate
+space:}{1. Consider the following joint discrete distribution of a random vector (Y,Z) taking values over the bi-variate space:}}\label{consider-the-following-joint-discrete-distribution-of-a-random-vector-yz-taking-values-over-the-bi-variate-space}}
+
+\begin{eqnarray*}
+{\cal S} = {\cal Y} \times {\cal Z} &=& \{(1,1);(1,2);(1,3);\\
+&& (2,1);(2,2);(2,3);\\
+&& (3,1);(3,2);(3,3)\}
+\end{eqnarray*} The joint probability distribution is provided as a
+matrix \(\texttt{J}\) whose generic entry
+\(\texttt{J[y,z]}=Pr \{Y=y,Z=z\}\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{J}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     1    2    3
+1 0.06 0.17 0.10
+2 0.10 0.12 0.11
+3 0.14 0.02 0.18
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{S}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      row col
+(1,1)   1   1
+(1,2)   1   2
+(1,3)   1   3
+(2,1)   2   1
+(2,2)   2   2
+(2,3)   2   3
+(3,1)   3   1
+(3,2)   3   2
+(3,3)   3   3
+\end{verbatim}
+
+You can load the matrix \texttt{S} of all the couples of the states in
+\({\cal S}\) and the matrix \texttt{J} containing the corresponding
+bivariate probability masses from the file ``Hmwk.RData''. How can you
+check that \(J\) is a probability distribution?
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{answer}{%
+\subsubsection{1. Answer:}\label{answer}}
+
+We can check whether \(J\) is a \emph{valid probability distribution} by
+verifying if it satisfies the two properties of \emph{non-negativity}
+and \emph{summation to 1}. Since \(J\) is discrete we will refer to the
+discrete versions of the formulas.
+
+The first states that all elements of the probability distribution must
+be non-negative:
+
+\(Pr \{Y=y,Z=z\} \ge 0 \; \forall y,z \in \{1, 2, 3\}\)
+
+We can write a simple conditional statement to check if this condition
+is satisfied:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# function to verify is a probability}
+\CommentTok{\# distribution is non{-}negative}
+\NormalTok{verify\_non\_negativity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(A) \{}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(A }\SpecialCharTok{\textgreater{}=} \DecValTok{0}\NormalTok{) }\SpecialCharTok{==} \FunctionTok{length}\NormalTok{(A))}
+\NormalTok{\}}
+
+\FunctionTok{verify\_non\_negativity}\NormalTok{(J)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+The property of summation to 1 instead states that the elements of the
+probability distribution must sum up to 1:
+
+\(\sum_{y,z\in\{1,2,3\}}Pr\{Y=y,Z=z\}=1\)
+
+This also can be checked with a simple conditional statement:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# function to verify is a probability}
+\CommentTok{\# distribution has sum equal to 1}
+\NormalTok{verify\_sum\_to\_one }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(A) \{}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{all.equal}\NormalTok{(}\FunctionTok{sum}\NormalTok{(A), }\DecValTok{1}\NormalTok{))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+It's important to notice that, to account for \emph{machine precision},
+we used the method \texttt{all.equal} instead of the \texttt{==}
+operator.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{verify\_sum\_to\_one}\NormalTok{(J)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+Also the second condition is satisfied, therefore we can say that \(J\)
+is indeed a valid probability distribution.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\bigskip
+
+\hypertarget{how-many-conditional-distributions-can-be-derived-from-the-joint-distribution-j-please-list-and-derive-them.}{%
+\subsubsection{\texorpdfstring{2. How many \emph{conditional
+distributions} can be derived from the joint distribution \texttt{J}?
+Please list and derive
+them.}{2. How many conditional distributions can be derived from the joint distribution J? Please list and derive them.}}\label{how-many-conditional-distributions-can-be-derived-from-the-joint-distribution-j-please-list-and-derive-them.}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{answer-1}{%
+\subsubsection{2. Answer:}\label{answer-1}}
+
+We can derive 6 conditional probability distributions by fixing on
+either \(Y\) or \(Z\) a value in \$\{1,2,3\}. To derive them we have
+just to implement the definition of conditional probability:
+
+\(Pr(Y = y | Z = z) = \frac{Pr(Y = y, Z = z)}{Pr(Z = z)}\)
+
+Where at the numerator we have the joint distribution provided by the
+matrix \(J\) and at the denominator the marginal distribution of the
+value we condition on, defined as:
+
+\(Pr(Z = z) = \sum_yPr(Y = y, Z = z)\)
+
+\(Y\) and \(Z\) can be swapped in the previous definitions to get the
+formulas for the conditioning on \(Y\). Below we implement functions to
+derive the needed marginal and conditional distributions;
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y }\OtherTok{=} \DecValTok{1}\SpecialCharTok{:}\DecValTok{3}
+\NormalTok{Z }\OtherTok{=} \DecValTok{1}\SpecialCharTok{:}\DecValTok{3}
+
+\CommentTok{\# marginal distribution of z}
+\NormalTok{get\_marginal\_distro\_z }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(z) \{}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(J[, z]))}
+\NormalTok{\}}
+
+\CommentTok{\# marginal distribution of y}
+\NormalTok{get\_marginal\_distro\_y }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y) \{}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(J[y, ]))}
+\NormalTok{\}}
+
+\CommentTok{\# marginal distribution of y given z}
+\NormalTok{get\_conditional\_distro\_y }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y, z) \{}
+    \FunctionTok{return}\NormalTok{(J[y, z]}\SpecialCharTok{/}\FunctionTok{get\_marginal\_distro\_z}\NormalTok{(z))}
+\NormalTok{\}}
+
+\CommentTok{\# marginal distribution of z given y}
+\NormalTok{get\_conditional\_distro\_z }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y, z) \{}
+    \FunctionTok{return}\NormalTok{(J[y, z]}\SpecialCharTok{/}\FunctionTok{get\_marginal\_distro\_y}\NormalTok{(y))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\(Pr(Y | Z=1)\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{get\_conditional\_distro\_y}\NormalTok{(Y, }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+        1         2         3 
+0.2000000 0.3333333 0.4666667 
+\end{verbatim}
+
+\(Pr(Y | Z=2)\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{get\_conditional\_distro\_y}\NormalTok{(Y, }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+         1          2          3 
+0.54838710 0.38709677 0.06451613 
+\end{verbatim}
+
+\(Pr(Y | Z=3)\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{get\_conditional\_distro\_y}\NormalTok{(Y, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+        1         2         3 
+0.2564103 0.2820513 0.4615385 
+\end{verbatim}
+
+\(Pr(Z | Y=1)\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{get\_conditional\_distro\_z}\NormalTok{(}\DecValTok{1}\NormalTok{, Z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+        1         2         3 
+0.1818182 0.5151515 0.3030303 
+\end{verbatim}
+
+\(Pr(Z | Y=2)\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{get\_conditional\_distro\_z}\NormalTok{(}\DecValTok{2}\NormalTok{, Z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+        1         2         3 
+0.3030303 0.3636364 0.3333333 
+\end{verbatim}
+
+\(Pr(Z | Y=3)\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{get\_conditional\_distro\_z}\NormalTok{(}\DecValTok{3}\NormalTok{, Z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+         1          2          3 
+0.41176471 0.05882353 0.52941176 
+\end{verbatim}
+
+We can derive infinite more conditional probability distributions by
+fixing values outside the support, but every distribution we would get
+this way would have probability equal to zero as it is conditioned on
+something impossible.
+
+\(Pr(Y | Z = z) = 0 \; \forall z \notin \{1,2,3\}\)
+
+\(Pr(Z | Y = y) = 0 \; \forall y \notin \{1,2,3\}\)
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\bigskip
+
+\hypertarget{make-sure-they-are-probability-distributions.}{%
+\subsubsection{3. Make sure they are probability
+distributions.}\label{make-sure-they-are-probability-distributions.}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{answer-2}{%
+\subsubsection{3. Answer:}\label{answer-2}}
+
+To make sure every conditional distribution we created is a probability
+distribution we can simply apply the previously defined functions over
+them:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# function that verifies both properties}
+\NormalTok{is\_valid\_distro }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(A) \{}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{verify\_non\_negativity}\NormalTok{(A) }\SpecialCharTok{\&} \FunctionTok{verify\_sum\_to\_one}\NormalTok{(A))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\(Pr(Y | Z=1)\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_y}\NormalTok{(Y, }\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\(Pr(Y | Z=2)\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_y}\NormalTok{(Y, }\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\(Pr(Y | Z=3)\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_y}\NormalTok{(Y, }\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\(Pr(Z | Y=1)\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_z}\NormalTok{(}\DecValTok{1}\NormalTok{, Z))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\(Pr(Z | Y=2)\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_z}\NormalTok{(}\DecValTok{2}\NormalTok{, Z))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\(Pr(Z | Y=3)\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_z}\NormalTok{(}\DecValTok{3}\NormalTok{, Z))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\bigskip
+
+\hypertarget{can-you-simulate-from-this-j-distribution-please-write-down-a-working-procedure-with-few-lines-of-r-code-as-an-example.-can-you-conceive-an-alternative-approach-in-case-write-down-an-alternative-working-procedure-with-few-lines-of-r}{%
+\subsubsection{\texorpdfstring{4. Can you simulate from this \texttt{J}
+distribution? Please write down a working procedure with few lines of R
+code as an example. Can you conceive an alternative approach? In case
+write down an alternative working procedure with few lines of
+R}{4. Can you simulate from this J distribution? Please write down a working procedure with few lines of R code as an example. Can you conceive an alternative approach? In case write down an alternative working procedure with few lines of R}}\label{can-you-simulate-from-this-j-distribution-please-write-down-a-working-procedure-with-few-lines-of-r-code-as-an-example.-can-you-conceive-an-alternative-approach-in-case-write-down-an-alternative-working-procedure-with-few-lines-of-r}}
+
+\bigskip
+
+\newpage
+
+\hypertarget{b.-bulb-lifetime-a-conjugate-bayesian-analysis-of-exponential-data}{%
+\subsection{B. Bulb lifetime: a conjugate Bayesian analysis of
+exponential
+data}\label{b.-bulb-lifetime-a-conjugate-bayesian-analysis-of-exponential-data}}
+
+You work for Light Bulbs International. You have developed an innovative
+bulb, and you are interested in characterizing it statistically. You
+test 20 innovative bulbs to determine their lifetimes, and you observe
+the following data (in hours), which have been sorted from smallest to
+largest.
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{l}
+1, 13, 27, 43, 73, 75, 154, 196, 220, 297,\\
+344, 610, 734, 783, 796, 845, 859, 992, 1066, 1471
+\end{tabular}
+\end{table}
+
+Based on your experience with light bulbs, you believe that their
+lifetimes \(Y_i\) can be modeled using an exponential distribution
+conditionally on \(\theta\) where \(\psi = 1/\theta\) is the average
+bulb lifetime.
+
+\hypertarget{write-the-main-ingredients-of-the-bayesian-model.}{%
+\subsubsection{1. Write the main ingredients of the Bayesian
+model.}\label{write-the-main-ingredients-of-the-bayesian-model.}}
+
+\hypertarget{choose-a-conjugate-prior-distribution-pitheta-with-mean-equal-to-0.003-and-standard-deviation-0.00173.}{%
+\subsubsection{\texorpdfstring{2. Choose a conjugate prior distribution
+\(\pi(\theta)\) with mean equal to 0.003 and standard deviation
+0.00173.}{2. Choose a conjugate prior distribution \textbackslash pi(\textbackslash theta) with mean equal to 0.003 and standard deviation 0.00173.}}\label{choose-a-conjugate-prior-distribution-pitheta-with-mean-equal-to-0.003-and-standard-deviation-0.00173.}}
+
+\hypertarget{argue-why-with-this-choice-you-are-providing-only-a-vague-prior-opinion-on-the-average-lifetime-of-the-bulb.}{%
+\subsubsection{3. Argue why with this choice you are providing only a
+vague prior opinion on the average lifetime of the
+bulb.}\label{argue-why-with-this-choice-you-are-providing-only-a-vague-prior-opinion-on-the-average-lifetime-of-the-bulb.}}
+
+\hypertarget{show-that-this-setup-fits-into-the-framework-of-the-conjugate-bayesian-analysis.}{%
+\subsubsection{4. Show that this setup fits into the framework of the
+conjugate Bayesian
+analysis.}\label{show-that-this-setup-fits-into-the-framework-of-the-conjugate-bayesian-analysis.}}
+
+\hypertarget{based-on-the-information-gathered-on-the-20-bulbs-what-can-you-say-about-the-main-characteristics-of-the-lifetime-of-your-innovative-bulb-argue-that-we-have-learnt-some-relevant-information-about-the-theta-parameter-and-this-can-be-converted-into-relevant-information-about-the-unknown-average-lifetime-of-the-innovative-bulb-psi1theta.}{%
+\subsubsection{\texorpdfstring{5. Based on the information gathered on
+the 20 bulbs, what can you say about the main characteristics of the
+lifetime of your innovative bulb? Argue that we have learnt some
+relevant information about the \(\theta\) parameter and this can be
+converted into relevant information about the unknown average lifetime
+of the innovative bulb
+\(\psi=1/\theta\).}{5. Based on the information gathered on the 20 bulbs, what can you say about the main characteristics of the lifetime of your innovative bulb? Argue that we have learnt some relevant information about the \textbackslash theta parameter and this can be converted into relevant information about the unknown average lifetime of the innovative bulb \textbackslash psi=1/\textbackslash theta.}}\label{based-on-the-information-gathered-on-the-20-bulbs-what-can-you-say-about-the-main-characteristics-of-the-lifetime-of-your-innovative-bulb-argue-that-we-have-learnt-some-relevant-information-about-the-theta-parameter-and-this-can-be-converted-into-relevant-information-about-the-unknown-average-lifetime-of-the-innovative-bulb-psi1theta.}}
+
+\hypertarget{however-your-boss-would-be-interested-in-the-probability-that-the-average-bulb-lifetime-1theta-exceeds-550-hours.-what-can-you-say-about-that-after-observing-the-data-provide-her-with-a-meaningful-bayesian-answer.}{%
+\subsubsection{\texorpdfstring{6. However, your boss would be interested
+in the probability that the average bulb lifetime \(1/\theta\) exceeds
+550 hours. What can you say about that after observing the data? Provide
+her with a meaningful Bayesian
+answer.}{6. However, your boss would be interested in the probability that the average bulb lifetime 1/\textbackslash theta exceeds 550 hours. What can you say about that after observing the data? Provide her with a meaningful Bayesian answer.}}\label{however-your-boss-would-be-interested-in-the-probability-that-the-average-bulb-lifetime-1theta-exceeds-550-hours.-what-can-you-say-about-that-after-observing-the-data-provide-her-with-a-meaningful-bayesian-answer.}}
+
+\newpage
+
+\hypertarget{c.-exchangeability}{%
+\subsection{C. Exchangeability}\label{c.-exchangeability}}
+
+Let us consider an infinitely exchangeable sequence of binary random
+variables \(X_1,...,X_n,...\)
+
+\hypertarget{provide-the-definition-of-the-distributional-properties-characterizing-an-infinitely-echangeable-binary-sequence-of-random-variables-x_1-...x_n-.....-consider-the-de-finetti-representation-theorem-relying-on-a-suitable-distribution-pitheta-on-01-and-show-that}{%
+\subsubsection{\texorpdfstring{1. Provide the definition of the
+distributional properties characterizing an infinitely echangeable
+binary sequence of random variables \(X_1, ...,X_n, ....\). Consider the
+De Finetti representation theorem relying on a suitable distribution
+\(\pi(\theta)\) on \([0,1]\) and show
+that}{1. Provide the definition of the distributional properties characterizing an infinitely echangeable binary sequence of random variables X\_1, ...,X\_n, ..... Consider the De Finetti representation theorem relying on a suitable distribution \textbackslash pi(\textbackslash theta) on {[}0,1{]} and show that}}\label{provide-the-definition-of-the-distributional-properties-characterizing-an-infinitely-echangeable-binary-sequence-of-random-variables-x_1-...x_n-.....-consider-the-de-finetti-representation-theorem-relying-on-a-suitable-distribution-pitheta-on-01-and-show-that}}
+
+\begin{eqnarray*} 
+E[X_i]&=&E_{\pi}[\theta]\\
+E[X_i X_j] &=& E_{\pi}[\theta^2]\\
+Cov[X_i X_j] &=& Var_{\pi}[\theta]
+\end{eqnarray*}
+
+\hypertarget{prove-that-any-couple-of-random-variabes-in-that-sequence-must-be-non-negatively-correlated.}{%
+\subsubsection{2. Prove that any couple of random variabes in that
+sequence must be non-negatively
+correlated.}\label{prove-that-any-couple-of-random-variabes-in-that-sequence-must-be-non-negatively-correlated.}}
+
+\hypertarget{find-what-are-the-conditions-on-the-distribution-picdot-so-that-corx_i-x_j1.}{%
+\subsubsection{\texorpdfstring{3. Find what are the conditions on the
+distribution \(\pi(\cdot)\) so that
+\(Cor[X_i X_j]=1\).}{3. Find what are the conditions on the distribution \textbackslash pi(\textbackslash cdot) so that Cor{[}X\_i X\_j{]}=1.}}\label{find-what-are-the-conditions-on-the-distribution-picdot-so-that-corx_i-x_j1.}}
+
+\hypertarget{what-do-these-conditions-imply-on-the-type-and-shape-of-picdot-make-an-example.}{%
+\subsubsection{\texorpdfstring{4. What do these conditions imply on the
+type and shape of \(\pi(\cdot)\)? (make an
+example).}{4. What do these conditions imply on the type and shape of \textbackslash pi(\textbackslash cdot)? (make an example).}}\label{what-do-these-conditions-imply-on-the-type-and-shape-of-picdot-make-an-example.}}
+
+\vspace{10.5cm}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+© 2023-2024 - Statistical Methods in Data Science and Laboratory II -
+2023-2024
+
+\begin{verbatim}
+Last update by LT: Thu Apr 18 19:45:13 2024
+\end{verbatim}
+
+\end{document}
