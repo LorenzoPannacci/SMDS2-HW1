@@ -205,10 +205,9 @@ is satisfied:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# function to verify is a probability}
-\CommentTok{\# distribution is non{-}negative}
-\NormalTok{verify\_non\_negativity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(A) \{}
-    \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(A }\SpecialCharTok{\textgreater{}=} \DecValTok{0}\NormalTok{) }\SpecialCharTok{==} \FunctionTok{length}\NormalTok{(A))}
+\CommentTok{\# function to verify is a probability distribution is non{-}negative}
+\NormalTok{verify\_non\_negativity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(A)\{}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(A }\SpecialCharTok{\textgreater{}=} \DecValTok{0}\NormalTok{) }\SpecialCharTok{==} \FunctionTok{length}\NormalTok{(A)) }
 \NormalTok{\}}
 
 \FunctionTok{verify\_non\_negativity}\NormalTok{(J)}
@@ -228,10 +227,9 @@ This also can be checked with a simple conditional statement:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# function to verify is a probability}
-\CommentTok{\# distribution has sum equal to 1}
-\NormalTok{verify\_sum\_to\_one }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(A) \{}
-    \FunctionTok{return}\NormalTok{(}\FunctionTok{all.equal}\NormalTok{(}\FunctionTok{sum}\NormalTok{(A), }\DecValTok{1}\NormalTok{))}
+\CommentTok{\# function to verify is a probability distribution has sum equal to 1}
+\NormalTok{verify\_sum\_to\_one }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(A)\{}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{all.equal}\NormalTok{(}\FunctionTok{sum}\NormalTok{(A), }\DecValTok{1}\NormalTok{))}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -290,23 +288,23 @@ derive the needed marginal and conditional distributions;
 \NormalTok{Z }\OtherTok{=} \DecValTok{1}\SpecialCharTok{:}\DecValTok{3}
 
 \CommentTok{\# marginal distribution of z}
-\NormalTok{get\_marginal\_distro\_z }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(z) \{}
-    \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(J[, z]))}
+\NormalTok{get\_marginal\_distro\_z }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(z)\{}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(J[,z]))}
 \NormalTok{\}}
 
 \CommentTok{\# marginal distribution of y}
-\NormalTok{get\_marginal\_distro\_y }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y) \{}
-    \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(J[y, ]))}
+\NormalTok{get\_marginal\_distro\_y }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y)\{}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(J[y,]))}
 \NormalTok{\}}
 
 \CommentTok{\# marginal distribution of y given z}
-\NormalTok{get\_conditional\_distro\_y }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y, z) \{}
-    \FunctionTok{return}\NormalTok{(J[y, z]}\SpecialCharTok{/}\FunctionTok{get\_marginal\_distro\_z}\NormalTok{(z))}
+\NormalTok{get\_conditional\_distro\_y }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y, z)\{}
+  \FunctionTok{return}\NormalTok{(J[y,z] }\SpecialCharTok{/} \FunctionTok{get\_marginal\_distro\_z}\NormalTok{(z))}
 \NormalTok{\}}
 
 \CommentTok{\# marginal distribution of z given y}
-\NormalTok{get\_conditional\_distro\_z }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y, z) \{}
-    \FunctionTok{return}\NormalTok{(J[y, z]}\SpecialCharTok{/}\FunctionTok{get\_marginal\_distro\_y}\NormalTok{(y))}
+\NormalTok{get\_conditional\_distro\_z }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y, z)\{}
+  \FunctionTok{return}\NormalTok{(J[y,z] }\SpecialCharTok{/} \FunctionTok{get\_marginal\_distro\_y}\NormalTok{(y))}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -418,8 +416,8 @@ them:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# function that verifies both properties}
-\NormalTok{is\_valid\_distro }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(A) \{}
-    \FunctionTok{return}\NormalTok{(}\FunctionTok{verify\_non\_negativity}\NormalTok{(A) }\SpecialCharTok{\&} \FunctionTok{verify\_sum\_to\_one}\NormalTok{(A))}
+\NormalTok{is\_valid\_distro }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(A)\{}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{verify\_non\_negativity}\NormalTok{(A) }\SpecialCharTok{\&} \FunctionTok{verify\_sum\_to\_one}\NormalTok{(A))}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -507,6 +505,65 @@ code as an example. Can you conceive an alternative approach? In case
 write down an alternative working procedure with few lines of
 R}{4. Can you simulate from this J distribution? Please write down a working procedure with few lines of R code as an example. Can you conceive an alternative approach? In case write down an alternative working procedure with few lines of R}}\label{can-you-simulate-from-this-j-distribution-please-write-down-a-working-procedure-with-few-lines-of-r-code-as-an-example.-can-you-conceive-an-alternative-approach-in-case-write-down-an-alternative-working-procedure-with-few-lines-of-r}}
 
+\hypertarget{answer-3}{%
+\subsubsection{4. Answer:}\label{answer-3}}
+
+We can simulate from the \texttt{J} by using the \texttt{sample} method.
+We will have to treat the matrix as a vector and turn back the indices
+of the vector into tuples.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{index\_to\_tuple }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n)\{}
+\NormalTok{  row }\OtherTok{=}\NormalTok{ ((n }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\%} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+} \DecValTok{1}
+\NormalTok{  col }\OtherTok{=}\NormalTok{ ((n }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%/\%} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+} \DecValTok{1}
+  
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(row, col))}
+\NormalTok{\}}
+
+\NormalTok{sample\_from\_J }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n)\{}
+\NormalTok{  indices }\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\FunctionTok{length}\NormalTok{(J), n, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{prob =}\NormalTok{ J)}
+\NormalTok{  tuples }\OtherTok{=} \FunctionTok{index\_to\_tuple}\NormalTok{(indices)}
+  \FunctionTok{return}\NormalTok{(tuples)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+To check the correctness of the sampling we can confront the empirical
+average of the sampling with the true distribution:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sample\_from\_J\_vector }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n)\{}
+\NormalTok{  indices }\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\FunctionTok{length}\NormalTok{(J), n, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{prob =}\NormalTok{ J)}
+  \FunctionTok{return}\NormalTok{(indices)}
+\NormalTok{\}}
+
+\NormalTok{n\_samples }\OtherTok{=} \DecValTok{10000000}
+
+\NormalTok{samples }\OtherTok{=} \FunctionTok{sample\_from\_J\_vector}\NormalTok{(n\_samples)}
+
+\NormalTok{emp\_mean }\OtherTok{=} \FunctionTok{hist}\NormalTok{(samples, }\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{9}\NormalTok{), }\AttributeTok{plot =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{$}\NormalTok{counts }\SpecialCharTok{/}\NormalTok{ n\_samples}
+
+\FunctionTok{norm}\NormalTok{(J }\SpecialCharTok{{-}}\NormalTok{ emp\_mean, }\AttributeTok{type =} \StringTok{"2"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.0001350278
+\end{verbatim}
+
+An alternative method would be exploiting the marginal and conditional
+distributions of sample separately \(Y\) and \(Z\). We present the case
+where we first sample \(Z\) using the marginal distribution and then the
+\(Y\) conditioned on the \(Z\) obtained:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# code }\AlertTok{TODO}
+\end{Highlighting}
+\end{Shaded}
+
 \bigskip
 
 \newpage
@@ -538,6 +595,12 @@ bulb lifetime.
 \hypertarget{write-the-main-ingredients-of-the-bayesian-model.}{%
 \subsubsection{1. Write the main ingredients of the Bayesian
 model.}\label{write-the-main-ingredients-of-the-bayesian-model.}}
+
+\hypertarget{answer-4}{%
+\subsubsection{1. Answer:}\label{answer-4}}
+
+The main ingredients of the Bayesian model are * Prior distribution *
+Likelihood function
 
 \hypertarget{choose-a-conjugate-prior-distribution-pitheta-with-mean-equal-to-0.003-and-standard-deviation-0.00173.}{%
 \subsubsection{\texorpdfstring{2. Choose a conjugate prior distribution
@@ -615,7 +678,7 @@ example).}{4. What do these conditions imply on the type and shape of \textbacks
 2023-2024
 
 \begin{verbatim}
-Last update by LT: Thu Apr 18 19:45:13 2024
+Last update by LT: Fri Apr 19 09:23:46 2024
 \end{verbatim}
 
 \end{document}

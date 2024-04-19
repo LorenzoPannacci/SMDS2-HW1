@@ -339,6 +339,14 @@ norm(J - emp_mean, type = "2")
 
 ```
 
+An alternative method would be exploiting the marginal and conditional distributions of sample separately $Y$ and $Z$. We present the case where we first sample $Z$ using the marginal distribution and then the $Y$ conditioned on the $Z$ obtained:
+
+```{r}
+
+# code TODO
+
+```
+
 \bigskip
 
 
@@ -360,6 +368,12 @@ Based on your experience with light bulbs, you believe that their lifetimes $Y_i
 
 
 ### 1. Write the main ingredients of the Bayesian model.
+
+### 1. Answer:
+
+The main ingredients of the Bayesian model are
+* Prior distribution
+* Likelihood function
 
 ### 2. Choose a conjugate prior distribution $\pi(\theta)$ with mean equal to 0.003 and standard deviation 0.00173.
 
