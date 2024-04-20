@@ -193,7 +193,7 @@ check that \(J\) is a probability distribution?
 We can check whether \(J\) is a \emph{valid probability distribution} by
 verifying if it satisfies the two properties of \emph{non-negativity}
 and \emph{summation to 1}. Since \(J\) is discrete we will refer to the
-discrete versions of the formulas.
+discrete versions of the properties.
 
 The first states that all elements of the probability distribution must
 be non-negative:
@@ -205,9 +205,10 @@ is satisfied:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# function to verify is a probability distribution is non{-}negative}
-\NormalTok{verify\_non\_negativity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(A)\{}
-  \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(A }\SpecialCharTok{\textgreater{}=} \DecValTok{0}\NormalTok{) }\SpecialCharTok{==} \FunctionTok{length}\NormalTok{(A)) }
+\CommentTok{\# function to verify if a probability}
+\CommentTok{\# distribution is non{-}negative}
+\NormalTok{verify\_non\_negativity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(A) \{}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(A }\SpecialCharTok{\textgreater{}=} \DecValTok{0}\NormalTok{) }\SpecialCharTok{==} \FunctionTok{length}\NormalTok{(A))}
 \NormalTok{\}}
 
 \FunctionTok{verify\_non\_negativity}\NormalTok{(J)}
@@ -218,8 +219,10 @@ is satisfied:
 [1] TRUE
 \end{verbatim}
 
-The property of summation to 1 instead states that the elements of the
-probability distribution must sum up to 1:
+As we can see and was evident from the previous code block that printed
+the matrix the first property is satisfied. The property of summation to
+1 instead states that the elements of the probability distribution must
+sum up to 1:
 
 \(\sum_{y,z\in\{1,2,3\}}Pr\{Y=y,Z=z\}=1\)
 
@@ -227,9 +230,10 @@ This also can be checked with a simple conditional statement:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# function to verify is a probability distribution has sum equal to 1}
-\NormalTok{verify\_sum\_to\_one }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(A)\{}
-  \FunctionTok{return}\NormalTok{(}\FunctionTok{all.equal}\NormalTok{(}\FunctionTok{sum}\NormalTok{(A), }\DecValTok{1}\NormalTok{))}
+\CommentTok{\# function to verify is a probability}
+\CommentTok{\# distribution has sum equal to 1}
+\NormalTok{verify\_sum\_to\_one }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(A) \{}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{all.equal}\NormalTok{(}\FunctionTok{sum}\NormalTok{(A), }\DecValTok{1}\NormalTok{))}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -266,54 +270,71 @@ them.}{2. How many conditional distributions can be derived from the joint distr
 \hypertarget{answer-1}{%
 \subsubsection{2. Answer:}\label{answer-1}}
 
-We can derive 6 conditional probability distributions by fixing on
-either \(Y\) or \(Z\) a value in \$\{1,2,3\}. To derive them we have
-just to implement the definition of conditional probability:
+We can derive \(6\) conditional probability distributions by fixing on
+either \(Y\) or \(Z\) a value in \(\{1,2,3\}\); we have \(2\) random
+variables with \(3\) possible values each, therefore \(3*2=6\)
+conditional distributions. To derive them we have just to implement the
+definition of conditional probability:
 
 \(Pr(Y = y | Z = z) = \frac{Pr(Y = y, Z = z)}{Pr(Z = z)}\)
 
-Where at the numerator we have the joint distribution provided by the
-matrix \(J\) and at the denominator the marginal distribution of the
-value we condition on, defined as:
+Where at the numerator we have the joint distribution, provided by the
+matrix \(J\), and at the denominator the \emph{marginal distribution} of
+the value we condition on, defined as:
 
 \(Pr(Z = z) = \sum_yPr(Y = y, Z = z)\)
 
-\(Y\) and \(Z\) can be swapped in the previous definitions to get the
-formulas for the conditioning on \(Y\). Below we implement functions to
-derive the needed marginal and conditional distributions;
+Base elements of this second formula are elements of the joint
+distribution, therefore we have derived all ingredients we need for the
+computation. In the previous definitions \(Y\) and \(Z\) can be swapped
+to get the formulas for \(Z\) conditioned on \(Y\). Below we implement
+the functions to get the marginal and conditional distributions:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# support of y}
 \NormalTok{Y }\OtherTok{=} \DecValTok{1}\SpecialCharTok{:}\DecValTok{3}
+\CommentTok{\# support of z}
 \NormalTok{Z }\OtherTok{=} \DecValTok{1}\SpecialCharTok{:}\DecValTok{3}
 
 \CommentTok{\# marginal distribution of z}
-\NormalTok{get\_marginal\_distro\_z }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(z)\{}
-  \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(J[,z]))}
+\NormalTok{get\_marginal\_distro\_Z }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
+\NormalTok{    marginal }\OtherTok{=} \FunctionTok{c}\NormalTok{()}
+    \ControlFlowTok{for}\NormalTok{ (z }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{) \{}
+\NormalTok{        marginal }\OtherTok{=} \FunctionTok{c}\NormalTok{(marginal, }\FunctionTok{sum}\NormalTok{(J[, z]))}
+\NormalTok{    \}}
+    \FunctionTok{return}\NormalTok{(marginal)}
 \NormalTok{\}}
 
 \CommentTok{\# marginal distribution of y}
-\NormalTok{get\_marginal\_distro\_y }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y)\{}
-  \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(J[y,]))}
+\NormalTok{get\_marginal\_distro\_Y }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
+\NormalTok{    marginal }\OtherTok{=} \FunctionTok{c}\NormalTok{()}
+    \ControlFlowTok{for}\NormalTok{ (y }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{) \{}
+\NormalTok{        marginal }\OtherTok{=} \FunctionTok{c}\NormalTok{(marginal, }\FunctionTok{sum}\NormalTok{(J[y, ]))}
+\NormalTok{    \}}
+    \FunctionTok{return}\NormalTok{(marginal)}
 \NormalTok{\}}
 
 \CommentTok{\# marginal distribution of y given z}
-\NormalTok{get\_conditional\_distro\_y }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y, z)\{}
-  \FunctionTok{return}\NormalTok{(J[y,z] }\SpecialCharTok{/} \FunctionTok{get\_marginal\_distro\_z}\NormalTok{(z))}
+\NormalTok{get\_conditional\_distro\_Y }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y, z) \{}
+    \FunctionTok{return}\NormalTok{(J[y, z]}\SpecialCharTok{/}\FunctionTok{get\_marginal\_distro\_Z}\NormalTok{()[z])}
 \NormalTok{\}}
 
 \CommentTok{\# marginal distribution of z given y}
-\NormalTok{get\_conditional\_distro\_z }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y, z)\{}
-  \FunctionTok{return}\NormalTok{(J[y,z] }\SpecialCharTok{/} \FunctionTok{get\_marginal\_distro\_y}\NormalTok{(y))}
+\NormalTok{get\_conditional\_distro\_Z }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y, z) \{}
+    \FunctionTok{return}\NormalTok{(J[y, z]}\SpecialCharTok{/}\FunctionTok{get\_marginal\_distro\_Y}\NormalTok{()[y])}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
-\(Pr(Y | Z=1)\)
+Here we call the functions to get for each possible conditioning the
+conditional probability distribution:
+
+\(\textbf{Pr(Y | Z = 1)}\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_conditional\_distro\_y}\NormalTok{(Y, }\DecValTok{1}\NormalTok{)}
+\FunctionTok{get\_conditional\_distro\_Y}\NormalTok{(Y, }\DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -322,11 +343,11 @@ derive the needed marginal and conditional distributions;
 0.2000000 0.3333333 0.4666667 
 \end{verbatim}
 
-\(Pr(Y | Z=2)\)
+\(\textbf{Pr(Y | Z = 2)}\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_conditional\_distro\_y}\NormalTok{(Y, }\DecValTok{2}\NormalTok{)}
+\FunctionTok{get\_conditional\_distro\_Y}\NormalTok{(Y, }\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -335,11 +356,11 @@ derive the needed marginal and conditional distributions;
 0.54838710 0.38709677 0.06451613 
 \end{verbatim}
 
-\(Pr(Y | Z=3)\)
+\(\textbf{Pr(Y | Z = 3)}\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_conditional\_distro\_y}\NormalTok{(Y, }\DecValTok{3}\NormalTok{)}
+\FunctionTok{get\_conditional\_distro\_Y}\NormalTok{(Y, }\DecValTok{3}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -348,11 +369,11 @@ derive the needed marginal and conditional distributions;
 0.2564103 0.2820513 0.4615385 
 \end{verbatim}
 
-\(Pr(Z | Y=1)\)
+\(\textbf{Pr(Z | Y = 1)}\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_conditional\_distro\_z}\NormalTok{(}\DecValTok{1}\NormalTok{, Z)}
+\FunctionTok{get\_conditional\_distro\_Z}\NormalTok{(}\DecValTok{1}\NormalTok{, Z)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -361,11 +382,11 @@ derive the needed marginal and conditional distributions;
 0.1818182 0.5151515 0.3030303 
 \end{verbatim}
 
-\(Pr(Z | Y=2)\)
+\(\textbf{Pr(Z | Y = 2)}\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_conditional\_distro\_z}\NormalTok{(}\DecValTok{2}\NormalTok{, Z)}
+\FunctionTok{get\_conditional\_distro\_Z}\NormalTok{(}\DecValTok{2}\NormalTok{, Z)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -374,11 +395,11 @@ derive the needed marginal and conditional distributions;
 0.3030303 0.3636364 0.3333333 
 \end{verbatim}
 
-\(Pr(Z | Y=3)\)
+\(\textbf{Pr(Z | Y = 3)}\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_conditional\_distro\_z}\NormalTok{(}\DecValTok{3}\NormalTok{, Z)}
+\FunctionTok{get\_conditional\_distro\_Z}\NormalTok{(}\DecValTok{3}\NormalTok{, Z)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -386,15 +407,6 @@ derive the needed marginal and conditional distributions;
          1          2          3 
 0.41176471 0.05882353 0.52941176 
 \end{verbatim}
-
-We can derive infinite more conditional probability distributions by
-fixing values outside the support, but every distribution we would get
-this way would have probability equal to zero as it is conditioned on
-something impossible.
-
-\(Pr(Y | Z = z) = 0 \; \forall z \notin \{1,2,3\}\)
-
-\(Pr(Z | Y = y) = 0 \; \forall y \notin \{1,2,3\}\)
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -404,29 +416,33 @@ something impossible.
 \subsubsection{3. Make sure they are probability
 distributions.}\label{make-sure-they-are-probability-distributions.}}
 
+\bigskip
+
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \hypertarget{answer-2}{%
 \subsubsection{3. Answer:}\label{answer-2}}
 
 To make sure every conditional distribution we created is a probability
-distribution we can simply apply the previously defined functions over
-them:
+distribution we can simply use the functions defined over point \(A.1\)
+and check whether they give us a positive response. To reduce the amount
+of code required we create a new function that checks them both:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# function that verifies both properties}
-\NormalTok{is\_valid\_distro }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(A)\{}
-  \FunctionTok{return}\NormalTok{(}\FunctionTok{verify\_non\_negativity}\NormalTok{(A) }\SpecialCharTok{\&} \FunctionTok{verify\_sum\_to\_one}\NormalTok{(A))}
+\CommentTok{\# function that verifies if a probability}
+\CommentTok{\# distribution satisfies both properties}
+\NormalTok{is\_valid\_distro }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(A) \{}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{verify\_non\_negativity}\NormalTok{(A) }\SpecialCharTok{\&} \FunctionTok{verify\_sum\_to\_one}\NormalTok{(A))}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
-\(Pr(Y | Z=1)\)
+\(\textbf{Pr(Y | Z = 1)}\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_y}\NormalTok{(Y, }\DecValTok{1}\NormalTok{))}
+\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_Y}\NormalTok{(Y, }\DecValTok{1}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -434,11 +450,11 @@ them:
 [1] TRUE
 \end{verbatim}
 
-\(Pr(Y | Z=2)\)
+\(\textbf{Pr(Y | Z = 2)}\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_y}\NormalTok{(Y, }\DecValTok{2}\NormalTok{))}
+\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_Y}\NormalTok{(Y, }\DecValTok{2}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -446,11 +462,11 @@ them:
 [1] TRUE
 \end{verbatim}
 
-\(Pr(Y | Z=3)\)
+\(\textbf{Pr(Y | Z = 1)}\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_y}\NormalTok{(Y, }\DecValTok{3}\NormalTok{))}
+\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_Y}\NormalTok{(Y, }\DecValTok{3}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -458,11 +474,11 @@ them:
 [1] TRUE
 \end{verbatim}
 
-\(Pr(Z | Y=1)\)
+\(\textbf{Pr(Z | Y = 1)}\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_z}\NormalTok{(}\DecValTok{1}\NormalTok{, Z))}
+\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_Z}\NormalTok{(}\DecValTok{1}\NormalTok{, Z))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -470,11 +486,11 @@ them:
 [1] TRUE
 \end{verbatim}
 
-\(Pr(Z | Y=2)\)
+\(\textbf{Pr(Z | Y = 2)}\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_z}\NormalTok{(}\DecValTok{2}\NormalTok{, Z))}
+\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_Z}\NormalTok{(}\DecValTok{2}\NormalTok{, Z))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -482,11 +498,11 @@ them:
 [1] TRUE
 \end{verbatim}
 
-\(Pr(Z | Y=3)\)
+\(\textbf{Pr(Z | Y = 3)}\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_z}\NormalTok{(}\DecValTok{3}\NormalTok{, Z))}
+\FunctionTok{is\_valid\_distro}\NormalTok{(}\FunctionTok{get\_conditional\_distro\_Z}\NormalTok{(}\DecValTok{3}\NormalTok{, Z))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -505,62 +521,82 @@ code as an example. Can you conceive an alternative approach? In case
 write down an alternative working procedure with few lines of
 R}{4. Can you simulate from this J distribution? Please write down a working procedure with few lines of R code as an example. Can you conceive an alternative approach? In case write down an alternative working procedure with few lines of R}}\label{can-you-simulate-from-this-j-distribution-please-write-down-a-working-procedure-with-few-lines-of-r-code-as-an-example.-can-you-conceive-an-alternative-approach-in-case-write-down-an-alternative-working-procedure-with-few-lines-of-r}}
 
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
 \hypertarget{answer-3}{%
 \subsubsection{4. Answer:}\label{answer-3}}
 
 We can simulate from the \texttt{J} by using the \texttt{sample} method.
 We will have to treat the matrix as a vector and turn back the indices
-of the vector into tuples.
+of the vector into tuples:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{index\_to\_tuple }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n)\{}
-\NormalTok{  row }\OtherTok{=}\NormalTok{ ((n }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\%} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+} \DecValTok{1}
-\NormalTok{  col }\OtherTok{=}\NormalTok{ ((n }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%/\%} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+} \DecValTok{1}
-  
-  \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(row, col))}
+\NormalTok{index\_to\_tuple }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n) \{}
+\NormalTok{    row }\OtherTok{=}\NormalTok{ ((n }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}\SpecialCharTok{\%\%}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+} \DecValTok{1}
+\NormalTok{    col }\OtherTok{=}\NormalTok{ ((n }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}\SpecialCharTok{\%/\%}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+} \DecValTok{1}
+
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(row, col))}
 \NormalTok{\}}
 
-\NormalTok{sample\_from\_J }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n)\{}
-\NormalTok{  indices }\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\FunctionTok{length}\NormalTok{(J), n, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{prob =}\NormalTok{ J)}
-\NormalTok{  tuples }\OtherTok{=} \FunctionTok{index\_to\_tuple}\NormalTok{(indices)}
-  \FunctionTok{return}\NormalTok{(tuples)}
+\NormalTok{sample\_from\_J }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
+\NormalTok{    indices }\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\FunctionTok{length}\NormalTok{(J), }\AttributeTok{size =} \DecValTok{1}\NormalTok{, }\AttributeTok{prob =}\NormalTok{ J)}
+\NormalTok{    tuples }\OtherTok{=} \FunctionTok{index\_to\_tuple}\NormalTok{(indices)}
+    \FunctionTok{return}\NormalTok{(tuples)}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
-To check the correctness of the sampling we can confront the empirical
-average of the sampling with the true distribution:
+We can think of an alternative method that exploits the previously
+computed marginal and conditional distributions. We first sample \(Z\)
+from its marginal distribution and then sample \(Y\) from the
+distribution conditioned on the result of the first sampling.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{sample\_from\_J\_vector }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n)\{}
-\NormalTok{  indices }\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\FunctionTok{length}\NormalTok{(J), n, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{prob =}\NormalTok{ J)}
-  \FunctionTok{return}\NormalTok{(indices)}
+\CommentTok{\# sampling from marginal Z}
+\NormalTok{sample\_from\_marginal\_Z }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
+\NormalTok{    distro }\OtherTok{=} \FunctionTok{get\_marginal\_distro\_Z}\NormalTok{()}
+    \FunctionTok{sample}\NormalTok{(}\FunctionTok{length}\NormalTok{(distro), }\AttributeTok{size =} \DecValTok{1}\NormalTok{, }\AttributeTok{prob =}\NormalTok{ distro)}
 \NormalTok{\}}
 
-\NormalTok{n\_samples }\OtherTok{=} \DecValTok{10000000}
+\CommentTok{\# sampling from Y conditioned on Z}
+\NormalTok{sample\_from\_Y\_conditioned }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(z) \{}
+\NormalTok{    distro }\OtherTok{=} \FunctionTok{get\_conditional\_distro\_y}\NormalTok{(Y, z)}
+    \FunctionTok{sample}\NormalTok{(}\FunctionTok{length}\NormalTok{(distro), }\AttributeTok{size =} \DecValTok{1}\NormalTok{, }\AttributeTok{prob =}\NormalTok{ distro)}
+\NormalTok{\}}
 
-\NormalTok{samples }\OtherTok{=} \FunctionTok{sample\_from\_J\_vector}\NormalTok{(n\_samples)}
-
-\NormalTok{emp\_mean }\OtherTok{=} \FunctionTok{hist}\NormalTok{(samples, }\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{9}\NormalTok{), }\AttributeTok{plot =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{$}\NormalTok{counts }\SpecialCharTok{/}\NormalTok{ n\_samples}
-
-\FunctionTok{norm}\NormalTok{(J }\SpecialCharTok{{-}}\NormalTok{ emp\_mean, }\AttributeTok{type =} \StringTok{"2"}\NormalTok{)}
+\NormalTok{sample\_marginal\_conditional\_1 }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
+\NormalTok{    z }\OtherTok{=} \FunctionTok{sample\_from\_marginal\_Z}\NormalTok{()}
+\NormalTok{    y }\OtherTok{=} \FunctionTok{sample\_from\_Y\_conditioned}\NormalTok{(z)}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(y, z))}
+\NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-[1] 0.0001350278
-\end{verbatim}
-
-An alternative method would be exploiting the marginal and conditional
-distributions of sample separately \(Y\) and \(Z\). We present the case
-where we first sample \(Z\) using the marginal distribution and then the
-\(Y\) conditioned on the \(Z\) obtained:
+Of curse we can also do the opposite, first sampling from the marginal
+distribution of \(Y\) and then from the conditional distribution of
+\(Z\) conditioned on the result of the first sampling.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# code }\AlertTok{TODO}
+\CommentTok{\# sampling from marginal Y}
+\NormalTok{sample\_from\_marginal\_Y }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
+\NormalTok{    distro }\OtherTok{=} \FunctionTok{get\_marginal\_distro\_Y}\NormalTok{()}
+    \FunctionTok{sample}\NormalTok{(}\FunctionTok{length}\NormalTok{(distro), }\AttributeTok{size =} \DecValTok{1}\NormalTok{, }\AttributeTok{prob =}\NormalTok{ distro)}
+\NormalTok{\}}
+
+\CommentTok{\# sampling from Z conditioned on Y}
+\NormalTok{sample\_from\_Z\_conditioned }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y) \{}
+\NormalTok{    distro }\OtherTok{=} \FunctionTok{get\_conditional\_distro\_z}\NormalTok{(y, Z)}
+    \FunctionTok{sample}\NormalTok{(}\FunctionTok{length}\NormalTok{(distro), }\AttributeTok{size =} \DecValTok{1}\NormalTok{, }\AttributeTok{prob =}\NormalTok{ distro)}
+\NormalTok{\}}
+
+\NormalTok{sample\_marginal\_conditional\_2 }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
+\NormalTok{    y }\OtherTok{=} \FunctionTok{sample\_from\_marginal\_Z}\NormalTok{()}
+\NormalTok{    z }\OtherTok{=} \FunctionTok{sample\_from\_Y\_conditioned}\NormalTok{(y)}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(y, z))}
+\NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -599,13 +635,40 @@ model.}\label{write-the-main-ingredients-of-the-bayesian-model.}}
 \hypertarget{answer-4}{%
 \subsubsection{1. Answer:}\label{answer-4}}
 
-The main ingredients of the Bayesian model are * Prior distribution *
-Likelihood function
+The main ingredients of the Bayesian model are
+
+\begin{itemize}
+\tightlist
+\item
+  \(\textbf{Prior distribution}\): the prior distribution
+  \(\pi(\theta)\) is a probability distribution that represents the
+  knowledge we have about the parameter of interest \(\theta\) before
+  any evidence gathered from observing the data is taken into account.
+\item
+  \(\textbf{Likelihood function}\):
+\end{itemize}
 
 \hypertarget{choose-a-conjugate-prior-distribution-pitheta-with-mean-equal-to-0.003-and-standard-deviation-0.00173.}{%
 \subsubsection{\texorpdfstring{2. Choose a conjugate prior distribution
 \(\pi(\theta)\) with mean equal to 0.003 and standard deviation
 0.00173.}{2. Choose a conjugate prior distribution \textbackslash pi(\textbackslash theta) with mean equal to 0.003 and standard deviation 0.00173.}}\label{choose-a-conjugate-prior-distribution-pitheta-with-mean-equal-to-0.003-and-standard-deviation-0.00173.}}
+
+Since our knowledge about the problem suggests us that the problem can
+be modeled using an exponential distribution the choice for a conjugate
+prior ends on a Gamma distribution. We indicate the shape and rate
+parameters of the Gamma respectively with \(\alpha\) and \(\beta\),
+while we use \(\mu\) and \(\sigma^2\) for mean and variance.
+
+Since \(\mu = \frac{\alpha}{\beta}\) and
+\(\sigma^2 = \frac{\alpha}{\beta^2}\) we can easily derive:
+
+\(\alpha = \frac{\mu^2}{\sigma^2} = \frac{0.003^2}{0.00173^2} = 3.007\)
+
+\(\beta = \frac{\mu}{\sigma^2} = \frac{0.003}{0.00173^2} = 1002.372\)
+
+Therefore:
+
+\(\pi(\theta) \sim Gamma(\alpha = 3.007, \beta = 1002.372)\)
 
 \hypertarget{argue-why-with-this-choice-you-are-providing-only-a-vague-prior-opinion-on-the-average-lifetime-of-the-bulb.}{%
 \subsubsection{3. Argue why with this choice you are providing only a
@@ -678,7 +741,7 @@ example).}{4. What do these conditions imply on the type and shape of \textbacks
 2023-2024
 
 \begin{verbatim}
-Last update by LT: Fri Apr 19 09:23:46 2024
+Last update by LT: Sat Apr 20 13:22:02 2024
 \end{verbatim}
 
 \end{document}

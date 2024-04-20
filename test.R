@@ -8,9 +8,25 @@ Y = 1:3
 Z = 1:3
 
 # marginal distribution of z
-get_marginal_distro_z <- function(z){
+get_marginal_distro_z <- function(){
+  marginal = c()
+  for(z in 1:3){
+    marginal = c(marginal, sum(J[,z]))
+  }
+  
+  return(marginal)
+}
+
+get_marginal_z <- function(z){
   return(sum(J[,z]))
 }
+
+sample_from_Z <- function(){
+  distro = get_marginal_distro_z()
+  sample(length(distro), size = 1, prob = distro)
+}
+
+sample_from_Z()
 
 # marginal distribution of y
 get_marginal_distro_y <- function(y){
@@ -19,7 +35,7 @@ get_marginal_distro_y <- function(y){
 
 # marginal distribution of y given z
 get_conditional_distro_y <- function(y, z){
-  return(J[y,z] / get_marginal_distro_z(z))
+  return(J[y,z] / get_marginal_z(z))
 }
 
 # marginal distribution of z given y
@@ -73,3 +89,57 @@ samples = sample_from_J_vector(n_samples)
 emp_mean <- hist(samples, breaks = seq(0, 9), plot = FALSE)$counts / n_samples
 
 norm(J - emp_mean, type = "2")
+
+########
+
+# sampling from marginal Z
+sample_from_Z <- function(){
+  distro = get_marginal_distro_Z()
+  sample(length(distro), size = 1, prob = distro)
+}
+
+# sampling from Y conditioned on Z
+sample_from_Y_conditioned <- function(z){
+  distro = get_conditional_distro_y(Y, z)
+  sample(length(distro), size = 1, prob = distro)
+}
+
+sample_marginal_conditional <- function(){
+  z = sample_from_Z()
+  y = sample_from_Y_conditioned(z)
+  return(c(y, z))
+}
+
+set.seed(42)
+
+sample_marginal_conditional()
+
+#########
+
+# marginal distribution of z
+get_marginal_distro_Z <- function(){
+  marginal = c()
+  for(z in 1:3){
+    marginal = c(marginal, sum(J[,z]))
+  }
+  
+  return(marginal)
+}
+
+# marginal of z
+get_marginal_Z <- function(z){
+  return(sum(J[,z]))
+}
+
+# marginal distribution of z
+get_marginal_distro_Z <- function(){
+  marginal = c()
+  for(z in 1:3) marginal = c(marginal, sum(J[,z]))
+  
+  return(marginal)
+}
+
+get_marginal_distro_Z()
+
+
+get_marginal_Z(3)

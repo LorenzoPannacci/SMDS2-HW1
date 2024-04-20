@@ -85,7 +85,7 @@ You can load the matrix `S` of all the couples of the states in ${\cal S}$ and t
 
 ### 1. Answer:
 
-We can check whether $J$ is a *valid probability distribution* by verifying if it satisfies the two properties of *non-negativity* and *summation to 1*. Since $J$ is discrete we will refer to the discrete versions of the formulas.
+We can check whether $J$ is a *valid probability distribution* by verifying if it satisfies the two properties of *non-negativity* and *summation to 1*. Since $J$ is discrete we will refer to the discrete versions of the properties.
 
 The first states that all elements of the probability distribution must be non-negative:
 
@@ -95,7 +95,7 @@ We can write a simple conditional statement to check if this condition is satisf
 
 ```{r}
 
-# function to verify is a probability distribution is non-negative
+# function to verify if a probability distribution is non-negative
 verify_non_negativity <- function(A){
   return(sum(A >= 0) == length(A)) 
 }
@@ -104,7 +104,7 @@ verify_non_negativity(J)
 
 ```
 
-The property of summation to 1 instead states that the elements of the probability distribution must sum up to 1:
+As we can see and was evident from the previous code block that printed the matrix the first property is satisfied. The property of summation to 1 instead states that the elements of the probability distribution must sum up to 1:
 
 $\sum_{y,z\in\{1,2,3\}}Pr\{Y=y,Z=z\}=1$
 
@@ -141,92 +141,95 @@ Also the second condition is satisfied, therefore we can say that $J$ is indeed 
 
 ### 2. Answer:
 
-We can derive 6 conditional probability distributions by fixing on either $Y$ or $Z$ a value in $\{1,2,3\}. To derive them we have just to implement the definition of conditional probability:
+We can derive $6$ conditional probability distributions by fixing on either $Y$ or $Z$ a value in $\{1,2,3\}$; we have $2$ random variables with $3$ possible values each, therefore $3*2=6$ conditional distributions. To derive them we have just to implement the definition of conditional probability:
 
 $Pr(Y = y | Z = z) = \frac{Pr(Y = y, Z = z)}{Pr(Z = z)}$
 
-Where at the numerator we have the joint distribution provided by the matrix $J$ and at the denominator the marginal distribution of the value we condition on, defined as:
+Where at the numerator we have the joint distribution, provided by the matrix $J$, and at the denominator the *marginal distribution* of the value we condition on, defined as:
 
 $Pr(Z = z) = \sum_yPr(Y = y, Z = z)$
 
-$Y$ and $Z$ can be swapped in the previous definitions to get the formulas for the conditioning on $Y$. Below we implement functions to derive the needed marginal and conditional distributions;
+Base elements of this second formula are elements of the joint distribution, therefore we have derived all ingredients we need for the computation. In the previous definitions $Y$ and $Z$ can be swapped to get the formulas for $Z$ conditioned on $Y$. Below we implement the functions to get the marginal and conditional distributions:
 
 ```{r}
-
+# support of y
 Y = 1:3
+# support of z
 Z = 1:3
 
 # marginal distribution of z
-get_marginal_distro_z <- function(z){
-  return(sum(J[,z]))
+get_marginal_distro_Z <- function(){
+  marginal = c()
+  for(z in 1:3){
+    marginal = c(marginal, sum(J[,z]))
+  }
+  return(marginal)
 }
 
 # marginal distribution of y
-get_marginal_distro_y <- function(y){
-  return(sum(J[y,]))
+get_marginal_distro_Y <- function(){
+  marginal = c()
+  for(y in 1:3){
+    marginal = c(marginal, sum(J[y,]))
+  }
+  return(marginal)
 }
 
 # marginal distribution of y given z
-get_conditional_distro_y <- function(y, z){
-  return(J[y,z] / get_marginal_distro_z(z))
+get_conditional_distro_Y <- function(y, z){
+  return(J[y,z] / get_marginal_distro_Z()[z])
 }
 
 # marginal distribution of z given y
-get_conditional_distro_z <- function(y, z){
-  return(J[y,z] / get_marginal_distro_y(y))
+get_conditional_distro_Z <- function(y, z){
+  return(J[y,z] / get_marginal_distro_Y()[y])
 }
 
 ```
 
-$Pr(Y | Z=1)$
+Here we call the functions to get for each possible conditioning the conditional probability distribution:
+
+$\textbf{Pr(Y | Z = 1)}$:
 ```{r}
 
-get_conditional_distro_y(Y, 1)
+get_conditional_distro_Y(Y, 1)
 
 ```
 
-$Pr(Y | Z=2)$
+$\textbf{Pr(Y | Z = 2)}$:
 ```{r}
 
-get_conditional_distro_y(Y, 2)
+get_conditional_distro_Y(Y, 2)
 
 ```
 
-$Pr(Y | Z=3)$
+$\textbf{Pr(Y | Z = 3)}$:
 ```{r}
 
-get_conditional_distro_y(Y, 3)
+get_conditional_distro_Y(Y, 3)
 
 ```
 
-$Pr(Z | Y=1)$
+$\textbf{Pr(Z | Y = 1)}$:
 ```{r}
 
-get_conditional_distro_z(1, Z)
+get_conditional_distro_Z(1, Z)
 
 ```
 
-$Pr(Z | Y=2)$
+$\textbf{Pr(Z | Y = 2)}$:
 ```{r}
 
-get_conditional_distro_z(2, Z)
+get_conditional_distro_Z(2, Z)
 
 ```
 
-
-$Pr(Z | Y=3)$
+$\textbf{Pr(Z | Y = 3)}$:
 ```{r}
 
-get_conditional_distro_z(3, Z)
+get_conditional_distro_Z(3, Z)
 
 ```
-
-
-We can derive infinite more conditional probability distributions by fixing values outside the support, but every distribution we would get this way would have probability equal to zero as it is conditioned on something impossible.
-
-$Pr(Y | Z = z) = 0 \; \forall z \notin \{1,2,3\}$
-
-$Pr(Z | Y = y) = 0 \; \forall y \notin \{1,2,3\}$
 
 ---
 
@@ -234,61 +237,63 @@ $Pr(Z | Y = y) = 0 \; \forall y \notin \{1,2,3\}$
 
 ### 3. Make sure they are probability distributions.
 
+\bigskip
+
 ---
 
 ### 3. Answer:
 
-To make sure every conditional distribution we created is a probability distribution we can simply apply the previously defined functions over them:
+To make sure every conditional distribution we created is a probability distribution we can simply use the functions defined over point $A.1$ and check whether they give us a positive response. To reduce the amount of code required we create a new function that checks them both:
 
 ```{r}
 
-# function that verifies both properties
+# function that verifies if a probability distribution satisfies both properties
 is_valid_distro <- function(A){
   return(verify_non_negativity(A) & verify_sum_to_one(A))
 }
 
 ```
 
-$Pr(Y | Z=1)$
+$\textbf{Pr(Y | Z = 1)}$:
 ```{r}
 
-is_valid_distro(get_conditional_distro_y(Y, 1))
+is_valid_distro(get_conditional_distro_Y(Y, 1))
 
 ```
 
-$Pr(Y | Z=2)$
+$\textbf{Pr(Y | Z = 2)}$:
 ```{r}
 
-is_valid_distro(get_conditional_distro_y(Y, 2))
+is_valid_distro(get_conditional_distro_Y(Y, 2))
 
 ```
 
-$Pr(Y | Z=3)$
+$\textbf{Pr(Y | Z = 1)}$:
 ```{r}
 
-is_valid_distro(get_conditional_distro_y(Y, 3))
+is_valid_distro(get_conditional_distro_Y(Y, 3))
 
 ```
 
-$Pr(Z | Y=1)$
+$\textbf{Pr(Z | Y = 1)}$:
 ```{r}
 
-is_valid_distro(get_conditional_distro_z(1, Z))
+is_valid_distro(get_conditional_distro_Z(1, Z))
 
 ```
 
-$Pr(Z | Y=2)$
+$\textbf{Pr(Z | Y = 2)}$:
 ```{r}
 
-is_valid_distro(get_conditional_distro_z(2, Z))
+is_valid_distro(get_conditional_distro_Z(2, Z))
 
 ```
 
 
-$Pr(Z | Y=3)$
+$\textbf{Pr(Z | Y = 3)}$:
 ```{r}
 
-is_valid_distro(get_conditional_distro_z(3, Z))
+is_valid_distro(get_conditional_distro_Z(3, Z))
 
 ```
 
@@ -299,9 +304,11 @@ is_valid_distro(get_conditional_distro_z(3, Z))
 
 ### 4. Can you simulate from this `J` distribution? Please write down a working procedure with few lines of R code as an example. Can you conceive an alternative approach? In case write down an alternative working procedure with few lines of R
 
+---
+
 ### 4. Answer:
 
-We can simulate from the `J` by using the `sample` method. We will have to treat the matrix as a vector and turn back the indices of the vector into tuples. 
+We can simulate from the `J` by using the `sample` method. We will have to treat the matrix as a vector and turn back the indices of the vector into tuples:
 
 ```{r}
 
@@ -312,38 +319,59 @@ index_to_tuple <- function(n){
   return(c(row, col))
 }
 
-sample_from_J <- function(n){
-  indices = sample(length(J), n, replace = TRUE, prob = J)
+sample_from_J <- function(){
+  indices = sample(length(J), size = 1, prob = J)
   tuples = index_to_tuple(indices)
   return(tuples)
 }
 
 ```
 
-To check the correctness of the sampling we can confront the empirical average of the sampling with the true distribution:
+We can think of an alternative method that exploits the previously computed marginal and conditional distributions. We first sample $Z$ from its marginal distribution and then sample $Y$ from the distribution conditioned on the result of the first sampling.
 
 ```{r}
 
-sample_from_J_vector <- function(n){
-  indices = sample(length(J), n, replace = TRUE, prob = J)
-  return(indices)
+# sampling from marginal Z
+sample_from_marginal_Z <- function(){
+  distro = get_marginal_distro_Z()
+  sample(length(distro), size = 1, prob = distro)
 }
 
-n_samples = 10000000
+# sampling from Y conditioned on Z
+sample_from_Y_conditioned <- function(z){
+  distro = get_conditional_distro_y(Y, z)
+  sample(length(distro), size = 1, prob = distro)
+}
 
-samples = sample_from_J_vector(n_samples)
-
-emp_mean = hist(samples, breaks = seq(0, 9), plot = FALSE)$counts / n_samples
-
-norm(J - emp_mean, type = "2")
+sample_marginal_conditional_1 <- function(){
+  z = sample_from_marginal_Z()
+  y = sample_from_Y_conditioned(z)
+  return(c(y, z))
+}
 
 ```
 
-An alternative method would be exploiting the marginal and conditional distributions of sample separately $Y$ and $Z$. We present the case where we first sample $Z$ using the marginal distribution and then the $Y$ conditioned on the $Z$ obtained:
+Of curse we can also do the opposite, first sampling from the marginal distribution of $Y$ and then from the conditional distribution of $Z$ conditioned on the result of the first sampling.
 
 ```{r}
 
-# code TODO
+# sampling from marginal Y
+sample_from_marginal_Y <- function(){
+  distro = get_marginal_distro_Y()
+  sample(length(distro), size = 1, prob = distro)
+}
+
+# sampling from Z conditioned on Y
+sample_from_Z_conditioned <- function(y){
+  distro = get_conditional_distro_z(y, Z)
+  sample(length(distro), size = 1, prob = distro)
+}
+
+sample_marginal_conditional_2 <- function(){
+  y = sample_from_marginal_Z()
+  z = sample_from_Y_conditioned(y)
+  return(c(y, z))
+}
 
 ```
 
@@ -372,10 +400,23 @@ Based on your experience with light bulbs, you believe that their lifetimes $Y_i
 ### 1. Answer:
 
 The main ingredients of the Bayesian model are
-* Prior distribution
-* Likelihood function
+
+* $\textbf{Prior distribution}$: the prior distribution $\pi(\theta)$ is a probability distribution that represents the knowledge we have about the parameter of interest $\theta$ before any evidence gathered from observing the data is taken into account.
+* $\textbf{Likelihood function}$: the likelihood function $f(\theta | y)$
 
 ### 2. Choose a conjugate prior distribution $\pi(\theta)$ with mean equal to 0.003 and standard deviation 0.00173.
+
+Since our knowledge about the problem suggests us that the problem can be modeled using an exponential distribution the choice for a conjugate prior ends on a Gamma distribution. We indicate the shape and rate parameters of the Gamma respectively with $\alpha$ and $\beta$, while we use $\mu$ and $\sigma^2$ for mean and variance.
+
+Since $\mu = \frac{\alpha}{\beta}$ and $\sigma^2 = \frac{\alpha}{\beta^2}$ we can easily derive:
+
+$\alpha = \frac{\mu^2}{\sigma^2} = \frac{0.003^2}{0.00173^2} = 3.007$
+
+$\beta = \frac{\mu}{\sigma^2} = \frac{0.003}{0.00173^2} = 1002.372$
+
+Therefore:
+
+$\pi(\theta) \sim Gamma(\alpha = 3.007, \beta = 1002.372)$
 
 ### 3. Argue why with this choice you are providing only a vague prior opinion on the average lifetime of the bulb.
 
