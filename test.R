@@ -143,3 +143,32 @@ get_marginal_distro_Z()
 
 
 get_marginal_Z(3)
+
+#################
+
+# Load required library
+library(ggplot2)
+
+# Parameters for gamma distribution
+rate <- 1002
+shape <- 3
+
+# Generate data from gamma distribution
+data <- rgamma(1000, shape, rate)
+
+# Plot the histogram
+ggplot(data.frame(x=data), aes(x)) +
+  geom_histogram(aes(y=..density..), bins=30, fill="lightblue", color="black", alpha=0.7) +
+  stat_function(fun = dgamma, args = list(shape = shape, rate = rate), color="red", size=1) +
+  labs(title="Gamma Distribution", x="Value", y="Density") +
+  theme_minimal()
+
+
+data = c(1, 13, 27, 43, 73, 75, 154, 196, 220, 297, 344, 610, 734, 783, 796, 845, 859, 992, 1066, 1471)
+
+mean(data)
+sd(data)
+
+hist(data, breaks = 25)
+
+?hist

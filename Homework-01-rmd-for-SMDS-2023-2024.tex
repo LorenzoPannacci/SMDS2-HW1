@@ -722,8 +722,19 @@ Cov[X_i X_j] &=& Var_{\pi}[\theta]
 \hypertarget{answer-5}{%
 \subsubsection{1. Answer:}\label{answer-5}}
 
-\textbf{TODO: Provide the definition of the distributional properties
-characterizing an infinitely echangeable binary sequence}
+We say that a infinite sequence of random variables \(X_1,...,X_n,...\)
+is infinitely exchangeable if the joint distribution of any tuple is
+equal to the joint distribution of any permutation of the same tuple:
+
+\[
+(X_1,...,X_k) \stackrel{d}{=} (X_{\sigma_1},...,X_{\sigma_k}) \;\; \forall \text{ permutations } \sigma
+\]
+
+Given a vector of \(k\) elements there are \(k!\) permutations of the
+elements. As the main book of the course ``A First Course in Bayesian
+Statistical Methods'' simply puts, \emph{\(X_1,...,X_n\) are
+exchangeable if the subscript labels convey no information about the
+outcomes}.
 
 \(\textbf{Showing } \mathbf{E[X_i]=E_{\pi}[\theta]}\):
 
@@ -746,7 +757,8 @@ Pr(X_1=x_1,...,X_n=x_n) =
 
 This holds for any \(n\), therefore we can fix \(n = 1\) from which we
 get permutations consisting of a single element that we will call
-\(X_i\), that is the same as the one presented in the first formula:
+\(X_i\), that is the same as the one presented in the formula of the
+expected value:
 
 \[
 Pr(X_i=x_i) = 
@@ -760,16 +772,15 @@ E[X_i] =
 \sum_{x_i=0}^1x_i\int_{[0,1]} \theta^{x_i}(1 - \theta)^{1 - x_i} \pi(\theta)d\theta
 \]
 
-When \(x_i = 1\) the element of the sum is equal to zero has it is
-multiplied by zero. We then rewrite the formula substituting \(x_i\)
-with \(1\):
+When \(x_i = 0\) the element of the sum is equal to zero, we can then
+rewrite the formula by just leaving the case where \(x_i = 1\):
 
 \[
 E[X_i] = 1\int_{[0,1]} \theta^{1}(1 - \theta)^{1 - 1} \pi(\theta)d\theta
 = \int_{[0,1]} \theta \pi(\theta)d\theta
 \]
 
-The element on the left of the equation follows exactly the definition
+The element on the right of the equation follows exactly the definition
 of expected value for continuous random variables, from which we
 conclude that:
 
@@ -779,13 +790,16 @@ E[X_i] = E_\pi[\theta]
 
 \(\textbf{Showing } \mathbf{E[X_iX_j]=E_{\pi}[\theta^2]}\):
 
-We start in a similarly to the previous proof, with the formula of the
-expected value, this time of the product of two binary random variables:
+We start in a similar fashion to the previous proof, with the formula of
+the expected value, this time of the product of two binary random
+variables:
 
 \[
 E[X_iX_j] = 
 \sum_{x_i=0}^1\sum_{x_j=0}^1x_ix_jPr(X_i=x_i,X_j=x_j)
-\] Still as before we write the formula from De Finetti's Theorem, this
+\]
+
+Still as before we write the formula from De Finetti's Theorem, this
 time fixing \(n = 2\):
 
 \[
@@ -801,7 +815,7 @@ E[X_iX_j] =
 \]
 
 However the only element of those summations that is not zero is the one
-where both \(x_i\) and \(x_j\) are equal to \(1\):
+where \(x_i = 1\) and \(x_j = 1\):
 
 \[
 E[X_iX_j] = \int_{[0,1]} \theta^{2}(1 - \theta)^{0} \pi(\theta)d\theta
@@ -890,7 +904,7 @@ distribution \(\pi(\cdot)\) so that
 \hypertarget{answer-7}{%
 \subsubsection{3. Answer:}\label{answer-7}}
 
-Recalling again the definition of correlation stated above, the get a
+Recalling again the definition of correlation stated above, to get a
 value of correlation equal to \(1\) we need the numerator and the
 denominator of the formula to be the same:
 
@@ -914,11 +928,11 @@ Then we must impose:
 Cov[X_i, X_j] = \theta(1 - \theta)
 \]
 
-Recalling one of the results of the first part of this exercise, that is
+Recalling a result from the first part of this exercise, that is
 \(Cov[X_i, X_j] = Var_\pi[\theta]\) what we are imposing is:
 
 \[
-Var_\pi[\theta] = \theta(1 - \theta)
+Var_\pi[\theta] = Var(X_i) = \theta(1 - \theta)
 \]
 
 \hypertarget{what-do-these-conditions-imply-on-the-type-and-shape-of-picdot-make-an-example.}{%
@@ -937,7 +951,7 @@ example).}{4. What do these conditions imply on the type and shape of \textbacks
 2023-2024
 
 \begin{verbatim}
-Last update by LT: Sun Apr 21 12:35:46 2024
+Last update by LT: Sun Apr 21 19:47:14 2024
 \end{verbatim}
 
 \end{document}
