@@ -64,24 +64,24 @@ load("Hmwk.RData")
 
 <font color="#FF0000"></font>
 
-
-
 ## A. Simulation
 
-### 1. Consider the following joint discrete distribution of a random vector $(Y,Z)$ taking values over the bi-variate space: 
+### 1. Consider the following joint discrete distribution of a random vector $(Y,Z)$ taking values over the bi-variate space:
+
 \begin{eqnarray*}
 {\cal S} = {\cal Y} \times {\cal Z} &=& \{(1,1);(1,2);(1,3);\\
 && (2,1);(2,2);(2,3);\\
 && (3,1);(3,2);(3,3)\}
-\end{eqnarray*}
-The joint probability distribution is provided as a matrix $\texttt{J}$  whose generic entry $\texttt{J[y,z]}=Pr \{Y=y,Z=z\}$ 
+\end{eqnarray*} The joint probability distribution is provided as a matrix $\texttt{J}$ whose generic entry $\texttt{J[y,z]}=Pr \{Y=y,Z=z\}$
+
 ```{r}
 J
 S
 ```
+
 You can load the matrix `S` of all the couples of the states in ${\cal S}$ and the matrix `J` containing the corresponding bivariate probability masses from the file "Hmwk.RData". How can you check that $J$ is a probability distribution?
 
----
+------------------------------------------------------------------------
 
 ### 1. Answer:
 
@@ -129,15 +129,13 @@ verify_sum_to_one(J)
 
 Also the second condition is satisfied, therefore we can say that $J$ is indeed a valid probability distribution.
 
----
+------------------------------------------------------------------------
 
 \bigskip
 
-
-
 ### 2. How many *conditional distributions* can be derived from the joint distribution `J`? Please list and derive them.
 
----
+------------------------------------------------------------------------
 
 ### 2. Answer:
 
@@ -190,6 +188,7 @@ get_conditional_distro_Z <- function(y, z){
 Here we call the functions to get for each possible conditioning the conditional probability distribution:
 
 $\textbf{Pr(Y | Z = 1)}$:
+
 ```{r}
 
 get_conditional_distro_Y(Y, 1)
@@ -197,6 +196,7 @@ get_conditional_distro_Y(Y, 1)
 ```
 
 $\textbf{Pr(Y | Z = 2)}$:
+
 ```{r}
 
 get_conditional_distro_Y(Y, 2)
@@ -204,6 +204,7 @@ get_conditional_distro_Y(Y, 2)
 ```
 
 $\textbf{Pr(Y | Z = 3)}$:
+
 ```{r}
 
 get_conditional_distro_Y(Y, 3)
@@ -211,6 +212,7 @@ get_conditional_distro_Y(Y, 3)
 ```
 
 $\textbf{Pr(Z | Y = 1)}$:
+
 ```{r}
 
 get_conditional_distro_Z(1, Z)
@@ -218,6 +220,7 @@ get_conditional_distro_Z(1, Z)
 ```
 
 $\textbf{Pr(Z | Y = 2)}$:
+
 ```{r}
 
 get_conditional_distro_Z(2, Z)
@@ -225,13 +228,14 @@ get_conditional_distro_Z(2, Z)
 ```
 
 $\textbf{Pr(Z | Y = 3)}$:
+
 ```{r}
 
 get_conditional_distro_Z(3, Z)
 
 ```
 
----
+------------------------------------------------------------------------
 
 \bigskip
 
@@ -239,7 +243,7 @@ get_conditional_distro_Z(3, Z)
 
 \bigskip
 
----
+------------------------------------------------------------------------
 
 ### 3. Answer:
 
@@ -255,6 +259,7 @@ is_valid_distro <- function(A){
 ```
 
 $\textbf{Pr(Y | Z = 1)}$:
+
 ```{r}
 
 is_valid_distro(get_conditional_distro_Y(Y, 1))
@@ -262,6 +267,7 @@ is_valid_distro(get_conditional_distro_Y(Y, 1))
 ```
 
 $\textbf{Pr(Y | Z = 2)}$:
+
 ```{r}
 
 is_valid_distro(get_conditional_distro_Y(Y, 2))
@@ -269,6 +275,7 @@ is_valid_distro(get_conditional_distro_Y(Y, 2))
 ```
 
 $\textbf{Pr(Y | Z = 1)}$:
+
 ```{r}
 
 is_valid_distro(get_conditional_distro_Y(Y, 3))
@@ -276,6 +283,7 @@ is_valid_distro(get_conditional_distro_Y(Y, 3))
 ```
 
 $\textbf{Pr(Z | Y = 1)}$:
+
 ```{r}
 
 is_valid_distro(get_conditional_distro_Z(1, Z))
@@ -283,28 +291,28 @@ is_valid_distro(get_conditional_distro_Z(1, Z))
 ```
 
 $\textbf{Pr(Z | Y = 2)}$:
+
 ```{r}
 
 is_valid_distro(get_conditional_distro_Z(2, Z))
 
 ```
 
-
 $\textbf{Pr(Z | Y = 3)}$:
+
 ```{r}
 
 is_valid_distro(get_conditional_distro_Z(3, Z))
 
 ```
 
----
+------------------------------------------------------------------------
 
 \bigskip
 
-
 ### 4. Can you simulate from this `J` distribution? Please write down a working procedure with few lines of R code as an example. Can you conceive an alternative approach? In case write down an alternative working procedure with few lines of R
 
----
+------------------------------------------------------------------------
 
 ### 4. Answer:
 
@@ -377,13 +385,13 @@ sample_marginal_conditional_2 <- function(){
 
 \bigskip
 
-
 \newpage
 
 ## B. Bulb lifetime: a conjugate Bayesian analysis of exponential data
 
 You work for Light Bulbs International. You have developed an innovative bulb, and you are interested in characterizing it statistically. You test 20 innovative bulbs to determine their lifetimes, and you observe the following data (in hours), which have been sorted from smallest to largest.
 
+```{=tex}
 \begin{table}[!h]
 \centering
 \begin{tabular}{l}
@@ -391,9 +399,8 @@ You work for Light Bulbs International. You have developed an innovative bulb, a
 344, 610, 734, 783, 796, 845, 859, 992, 1066, 1471
 \end{tabular}
 \end{table}
-
+```
 Based on your experience with light bulbs, you believe that their lifetimes $Y_i$ can be modeled using an exponential distribution conditionally on $\theta$ where $\psi = 1/\theta$ is the average bulb lifetime.
-
 
 ### 1. Write the main ingredients of the Bayesian model.
 
@@ -401,8 +408,8 @@ Based on your experience with light bulbs, you believe that their lifetimes $Y_i
 
 The main ingredients of the Bayesian model are
 
-* $\textbf{Prior distribution}$: the prior distribution $\pi(\theta)$ is a probability distribution that represents the knowledge we have about the parameter of interest $\theta$ before any evidence gathered from observing the data is taken into account.
-* $\textbf{Likelihood function}$: the likelihood function $f(\theta | y)$
+-   $\textbf{Prior distribution}$: the prior distribution $\pi(\theta)$ is a probability distribution that represents the knowledge we have about the parameter of interest $\theta$ before any evidence gathered from observing the data is taken into account.
+-   $\textbf{Likelihood function}$: the likelihood function $f(\theta | y)$
 
 ### 2. Choose a conjugate prior distribution $\pi(\theta)$ with mean equal to 0.003 and standard deviation 0.00173.
 
@@ -422,7 +429,6 @@ $\pi(\theta) \sim Gamma(\alpha = 3.007, \beta = 1002.372)$
 
 ### 4. Show that this setup fits into the framework of the conjugate Bayesian analysis.
 
-
 ### 5. Based on the information gathered on the 20 bulbs, what can you say about the main characteristics of the lifetime of your innovative bulb? Argue that we have learnt some relevant information about the $\theta$ parameter and this can be converted into relevant information about the unknown average lifetime of the innovative bulb $\psi=1/\theta$.
 
 ### 6. However, your boss would be interested in the probability that the average bulb lifetime $1/\theta$ exceeds 550 hours. What can you say about that after observing the data? Provide her with a meaningful Bayesian answer.
@@ -433,29 +439,193 @@ $\pi(\theta) \sim Gamma(\alpha = 3.007, \beta = 1002.372)$
 
 Let us consider an infinitely exchangeable sequence of binary random variables $X_1,...,X_n,...$
 
-### 1. Provide the definition of the distributional properties characterizing an infinitely echangeable binary sequence of random variables $X_1, ...,X_n, ....$. Consider the De Finetti representation theorem relying on a suitable distribution $\pi(\theta)$ on $[0,1]$ and show that 
+### 1. Provide the definition of the distributional properties characterizing an infinitely echangeable binary sequence of random variables $X_1, ...,X_n, ....$. Consider the De Finetti representation theorem relying on a suitable distribution $\pi(\theta)$ on $[0,1]$ and show that
 
+```{=tex}
 \begin{eqnarray*} 
 E[X_i]&=&E_{\pi}[\theta]\\
 E[X_i X_j] &=& E_{\pi}[\theta^2]\\
 Cov[X_i X_j] &=& Var_{\pi}[\theta]
-\end{eqnarray*} 
+\end{eqnarray*}
+```
 
-### 2. Prove that any couple of random variabes in that sequence must be non-negatively correlated. 
+### 1. Answer:
+
+**TODO: Provide the definition of the distributional properties characterizing an infinitely echangeable binary sequence**
+
+$\textbf{Showing } \mathbf{E[X_i]=E_{\pi}[\theta]}$:
+
+From the definition of the expected value defined over a binary value we have that:
+
+$$
+E[X_i] = \sum_{x_i=0}^1x_iPr(X_i=x_i)
+$$
+
+As starting hypothesis our sequence $X_1,...,X_n,...$ is infinitely exchangeable, therefore De Finetti's Theorem holds. We write the formula from De Finetti's theorem as was presented in the course's slides, since we are working with binary random variables:
+
+$$
+Pr(X_1=x_1,...,X_n=x_n) = 
+\int_{[0,1]} \prod_{i=1}^n\theta^{x_i}(1 - \theta)^{1 - x_i} \pi(\theta)d\theta
+$$
+
+This holds for any $n$, therefore we can fix $n = 1$ from which we get permutations consisting of a single element that we will call $X_i$, that is the same as the one presented in the first formula:
+
+$$
+Pr(X_i=x_i) = 
+\int_{[0,1]} \theta^{x_i}(1 - \theta)^{1 - x_i} \pi(\theta)d\theta
+$$
+
+We can therefore rewrite the latter as:
+
+$$
+E[X_i] = 
+\sum_{x_i=0}^1x_i\int_{[0,1]} \theta^{x_i}(1 - \theta)^{1 - x_i} \pi(\theta)d\theta
+$$
+
+When $x_i = 1$ the element of the sum is equal to zero has it is multiplied by zero. We then rewrite the formula substituting $x_i$ with $1$:
+
+$$
+E[X_i] = 1\int_{[0,1]} \theta^{1}(1 - \theta)^{1 - 1} \pi(\theta)d\theta
+= \int_{[0,1]} \theta \pi(\theta)d\theta
+$$
+
+The element on the left of the equation follows exactly the definition of expected value for continuous random variables, from which we conclude that:
+
+$$
+E[X_i] = E_\pi[\theta]
+$$
+
+$\textbf{Showing } \mathbf{E[X_iX_j]=E_{\pi}[\theta^2]}$:
+
+We start in a similarly to the previous proof, with the formula of the expected value, this time of the product of two binary random variables:
+
+$$
+E[X_iX_j] = 
+\sum_{x_i=0}^1\sum_{x_j=0}^1x_ix_jPr(X_i=x_i,X_j=x_j)
+$$
+Still as before we write the formula from De Finetti's Theorem, this time fixing $n = 2$:
+
+$$
+Pr(X_i=x_i,X_j=x_j) = \int_{[0,1]} \theta^{x_i}(1 - \theta)^{1 - x_i} \theta^{x_j}(1 - \theta)^{1 - x_j} \pi(\theta)d\theta
+= \int_{[0,1]} \theta^{x_i + x_j}(1 - \theta)^{2 - x_i - x_j} \pi(\theta)d\theta
+$$
+
+Substituting this into the expected value formula get us:
+
+$$
+E[X_iX_j] =
+\sum_{x_i=0}^1\sum_{x_j=0}^1x_ix_j\int_{[0,1]} \theta^{x_i + x_j}(1 - \theta)^{2 - x_i - x_j} \pi(\theta)d\theta
+$$
+
+However the only element of those summations that is not zero is the one where both $x_i$ and $x_j$ are equal to $1$:
+
+$$
+E[X_iX_j] = \int_{[0,1]} \theta^{2}(1 - \theta)^{0} \pi(\theta)d\theta
+= \int_{[0,1]} \theta^{2} \pi(\theta)d\theta
+$$
+
+Which is the definition of the second moment of $\theta$, therefore:
+
+$$
+E[X_iX_j] = E_\pi[\theta^2]
+$$
+
+$\textbf{Showing } \mathbf{Cov[X_i,X_j]=Var_{\pi}[\theta]}$:
+
+Let's recall the definition of covariance between two random variables $X_i$ and $X_j$:
+
+$$
+Cov[X_i,X_j] = E[X_iX_j]-E[X_i]E[X_j]
+$$
+
+Let's also recall the definition of variance of a random variable $A$:
+
+$$
+Var(A) = E[A^2] - E[A]^2
+$$
+
+We have already found the results of the two components of the covariance, namely:
+
+$$
+E[X_iX_j] = E_\pi[\theta^2], \;\;\;\;\;
+E[X_i] = E[X_j] = E_\pi[\theta]
+$$
+
+And by substituting them we understand they follow the definition of variance of $\theta$:
+
+$$
+Cov[X_i,X_j] = E_\pi[\theta^2] - E_\pi[\theta]E_\pi[\theta]
+= E_\pi[\theta^2] - E_\pi[\theta]^2
+= Var_\pi[\theta]
+$$
+
+
+### 2. Prove that any couple of random variabes in that sequence must be non-negatively correlated.
+
+### 2. Answer:
+
+Let's recall the definition of correlation between two random variables $X_i$ and $X_j$, that is the Pearson Correlation Coefficient:
+
+$$
+Cor[X_i, X_j] = \rho_{X_i,X_j} = \frac{Cov[X_i, X_j]}{\sigma_{X_i}\sigma_{X_j}}
+$$
+
+Where $\sigma$ is the standard deviation, that is the square root of the variance:
+
+$$
+\sigma_X = \sqrt{\sigma^2_X}=\sqrt{Var[X]}\ge0
+$$
+
+The denominator of the correlation formula is always non-negative as it is the product of two standard deviations and they are always non-negative. We have already studied the numerator in the previous points of this exercise and we concluded that:
+
+$$
+Cov[X_i, X_j] = Var_\pi[\theta] \ge 0
+$$
+
+We know that the variance is always non-negative, therefore also the numerator is non-negative. Since both numerator and denominator of the correlation formula are non-negative we can conclude that any couple of random variables of the sequence must be non-negatively correlated.
 
 ### 3. Find what are the conditions on the distribution $\pi(\cdot)$ so that $Cor[X_i X_j]=1$.
 
+### 3. Answer:
+
+Recalling again the definition of correlation stated above, the get a value of correlation equal to $1$ we need the numerator and the denominator of the formula to be the same:
+
+$$
+Cor[X_i, X_j] = 1 \iff  Cov[X_i, X_j] = \sigma_{X_i}\sigma_{X_j}
+$$
+
+Since $X_i$ and $X_j$ are Bernoulli random variables with the same parameter $\theta$ they have the same variance $Var(X_i) = Var(X_j) = \theta(1 - \theta)$:
+
+$$
+\sigma_{X_i}\sigma_{X_j} = \sqrt{Var[X_i]}\sqrt{Var[X_j]} = 
+\sqrt{\theta(1 - \theta)} \sqrt{\theta(1 - \theta)} =
+\theta(1 - \theta)
+$$
+
+Then we must impose:
+
+$$
+Cov[X_i, X_j] = \theta(1 - \theta)
+$$
+
+Recalling one of the results of the first part of this exercise, that is $Cov[X_i, X_j] = Var_\pi[\theta]$ what we are imposing is:
+
+$$
+Var_\pi[\theta] = \theta(1 - \theta)
+$$
+
 ### 4. What do these conditions imply on the type and shape of $\pi(\cdot)$? (make an example).
 
+### 4. Answer:
 
 \vspace{10.5cm}
 
+------------------------------------------------------------------------
 
+::: footer
+© 2023-2024 - Statistical Methods in Data Science and Laboratory II - 2023-2024
+:::
 
-
-
-* * *
-  <div class="footer"> &copy; 2023-2024 - Statistical Methods in Data Science and Laboratory II -  2023-2024 </div>
 ```{r, warning=FALSE, error=FALSE, message=FALSE, echo=FALSE}
 cat(paste("Last update by LT:",date()))
 ```

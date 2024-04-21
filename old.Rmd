@@ -1,0 +1,34 @@
+
+### 1. Answer:
+
+$\textbf{Showing } \mathbf{E[X_i]=E_{\pi}[\theta]}$:
+
+As starting hypothesis our sequence $X_1,...,X_n,...$ is infinitely exchangeable, therefore De Finetti's Theorem holds. Borrowing part of the notation from the main book for the course "A First Course in Bayesian Statistical Methods" we can say that:
+
+$Pr(X_1=x_1,...,X_n=x_n)=\int_{[0,1]} \{  \prod_{i=1}^n Pr(X_i=x_i|\theta) \}\pi(\theta)d\theta$
+
+This holds for any $n$, therefore we can fix $n = 1$, from which we get permutations consisting of a single element that we will call $X_i$:
+
+$Pr(X_i=x_i)=\int_{[0,1]} Pr(X_i=x_i|\theta) \pi(\theta)d\theta$
+
+From which we can derive the expected value as:
+
+$E[X_i]=\int_{[0,1]} E[X_i|\theta] \pi(\theta)d\theta$
+
+Since for the expectation $\theta$ is fixed and for the binary variable $X_i$ it is the probability of $X_i$ of being true, we can exploit the expected value of a Bernoulli random variable:
+
+$E[X_i]=\int_{[0,1]} \theta \pi(\theta)d\theta$
+
+The element on the left of the equation follows exactly the definition of expected value, from which we conclude that:
+
+$E[X_i] = E_\pi[\theta]$
+
+$\textbf{Showing } \mathbf{E[X_iX_j]=E_{\pi}[\theta^2]}$:
+
+We start in a similarly to the previous proof, this time fixing $n = 2$:
+
+$Pr(X_i=x_i,X_j=x_j)=\int_{[0,1]} Pr(X_i=x_i|\theta) Pr(X_j=x_j|\theta) \pi(\theta)d\theta$
+
+From De Finetti's Theorem we know that *the random variables are conditionally independent i.d., provided a random* $\theta \sim \pi(\theta)$ *has been fixed* (citing course's slides). We can therefore write the expected value as:
+
+$E(X_i=x_i,X_j=x_j)=\int_{[0,1]} Pr(X_i=x_i|\theta) Pr(X_j=x_j|\theta) \pi(\theta)d\theta$

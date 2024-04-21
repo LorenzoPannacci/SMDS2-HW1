@@ -1,0 +1,83 @@
+---
+title: Homework \#01
+author: SMDS-2023-2024
+date:  |
+  | \textsc{\textbf{\Large Statstical Methods in Data Science II a.y. 2022-2023}}
+  | 
+  | M.Sc. in Data Science
+  | 
+  | \underline{deadline: April 26th, 2024}
+output:
+  pdf_document:
+    keep_tex: yes
+    toc: no
+  html_document:
+    keep_md: yes
+    theme: united
+header-includes: 
+- \usepackage{transparent}
+- \usepackage[utf8]{inputenx}
+- \usepackage{iwona}
+- \usepackage{tikz}
+- \usepackage{dcolumn}
+- \usepackage{color}
+- \usepackage[italian]{babel}
+- \usepackage{listings}
+- \usepackage{hyperref}
+- \usepackage{setspace}
+- \usepackage{enumitem}
+- \usepackage{tocloft}
+- \usepackage{eso-pic}
+- \geometry{verbose,tmargin=5cm,bmargin=3.5cm,lmargin=2.5cm,rmargin=2.5cm}
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE)
+
+# the default output hook
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  if (!is.null(n <- options$out.lines)) {
+    x = unlist(stringr::str_split(x, '\n'))
+    if (length(x) > n) {
+      # truncate the output
+      x = c(head(x, n), '....\n')
+    }
+    x = paste(x, collapse = '\n') # paste first n lines together
+  }
+  hook_output(x, options)
+})
+```
+
+```{r, include=FALSE, warning=FALSE}
+
+options(width=60)
+opts_chunk$set(out.lines = 23, comment = "", warning = FALSE, message = FALSE, echo = TRUE, tidy = TRUE, size="small",tidy.opts=list(width.cutoff=50), fig.align = 'center', fig.width = 5, fig.height = 4)
+```
+
+```{r,echo=FALSE}
+set.seed(123)
+load("Hmwk.RData")
+```
+
+<font color="#FF0000"></font>
+
+$$
+\begin{split}
+Cov(X_i,X_j) &= E_\pi[\theta^2] - E_\pi[\theta]E_\pi[\theta] \\
+&= E_\pi[\theta^2] - E_\pi[\theta]^2 \\
+&= Var_\pi(\theta)
+\end{split}
+$$
+
+
+
+::: footer
+© 2023-2024 - Statistical Methods in Data Science and Laboratory II - 2023-2024
+:::
+
+```{r, warning=FALSE, error=FALSE, message=FALSE, echo=FALSE}
+cat(paste("Last update by LT:",date()))
+```
