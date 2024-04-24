@@ -172,3 +172,45 @@ sd(data)
 hist(data, breaks = 25)
 
 ?hist
+
+
+install.packages('MCMCpack')
+
+library('MCMCpack')
+
+# Define parameters
+alpha <- 3.007
+beta <- 1002.372
+
+# Generate sequence of x values
+x <- seq(0, 3000, length.out = 1000)  # Adjust the range and length.out as needed
+
+# Calculate density values using the dinvgamma() function
+density <- dinvgamma(x, alpha, beta)
+
+# Plot the inverse gamma distribution
+plot(x, density, type = "l", main = "Inverse Gamma Distribution", xlab = "x", ylab = "Density")
+
+
+# Given mean and variance
+mean_val <- 499.438
+variance_val <- 247704.352
+
+# Calculate rate parameter
+rate_parameter <- 1 / mean_val
+
+# Generate random numbers from exponential distribution
+data <- rexp(1000, rate = rate_parameter)
+
+?rexp
+
+# Plot the histogram
+hist(data, freq = FALSE, main = "Exponential Distribution",
+     xlab = "Value", ylab = "Density", col = "skyblue")
+
+# Add theoretical density curve
+curve(dexp(x, rate = rate_parameter), col = "red", lwd = 2, add = TRUE)
+
+data = c(1, 13, 27, 43, 73, 75, 154, 196, 220, 297, 344, 610, 734, 783, 796, 845, 859, 992, 1066, 1471)
+
+mean(data)
