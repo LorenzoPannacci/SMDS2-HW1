@@ -607,7 +607,7 @@ cat("The probability that the average bulb lifetime exceeds 550 hours is:", answ
 
 ```
 
-We can notice that this result is very different from what we would get from using only the observed data; in the set of samples that has been provided there are $9$ out of $20$ observations with a lifetime greater than $550$.
+We can notice that this result is very different from what we would get from using only the observed data using a Frequentist approach; in the set of samples that has been provided there are $9$ out of $20$ observations with a lifetime greater than $550$ and this would lead a Frequentist approach to give a much higher result.
 
 ------------------------------------------------------------------------
 
@@ -663,7 +663,7 @@ Pr(X_1=x_1,...,X_n=x_n) =
 \int_{[0,1]} \prod_{i=1}^n\theta^{x_i}(1 - \theta)^{1 - x_i} \pi(\theta)d\theta
 $$
 
-This holds for any $n$, therefore we can fix $n = 1$ from which we get permutations consisting of a single element that we will call $X_i$, that is the same as the one presented in the formula of the expected value:
+This holds for any $n$, therefore we can fix $n = 1$ from which we get permutations consisting of a single element that we will call $X_i$, that is the same as the one presented in the formula of the expected value.
 
 $$
 Pr(X_i=x_i) = 
@@ -684,7 +684,7 @@ E[X_i] = 1\int_{[0,1]} \theta^{1}(1 - \theta)^{1 - 1} \pi(\theta)d\theta
 = \int_{[0,1]} \theta \pi(\theta)d\theta
 $$
 
-The element on the right of the equation follows exactly the definition of expected value for continuous random variables, from which we conclude that:
+The element on the right of the equation follows exactly the *definition of expected value* for continuous random variables, from which we conclude that:
 
 $$
 E[X_i] = E_\pi[\theta]
@@ -699,7 +699,7 @@ E[X_iX_j] =
 \sum_{x_i=0}^1\sum_{x_j=0}^1x_ix_jPr(X_i=x_i,X_j=x_j)
 $$
 
-Still as before we write the formula from De Finetti's Theorem, this time fixing $n = 2$. We also have to impose $i \neq j$:
+Still as before we write the formula from De Finetti's Theorem, this time fixing $n = 2$. We also to impose $i \neq j$:
 
 $$
 Pr(X_i=x_i,X_j=x_j) = \int_{[0,1]} \theta^{x_i}(1 - \theta)^{1 - x_i} \theta^{x_j}(1 - \theta)^{1 - x_j} \pi(\theta)d\theta
@@ -720,7 +720,7 @@ E[X_iX_j] = \int_{[0,1]} \theta^{2}(1 - \theta)^{0} \pi(\theta)d\theta
 = \int_{[0,1]} \theta^{2} \pi(\theta)d\theta
 $$
 
-Which is the definition of the second moment of $\theta$, therefore:
+Which is the *definition of the second moment* of $\theta$, therefore:
 
 $$
 E[X_iX_j] = E_\pi[\theta^2]
@@ -747,7 +747,7 @@ E[X_iX_j] = E_\pi[\theta^2], \;\;\;\;\;
 E[X_i] = E[X_j] = E_\pi[\theta]
 $$
 
-And by substituting them we understand they follow the definition of variance of $\theta$:
+And by substituting them we understand they follow the *definition of variance* of $\theta$:
 
 $$
 Cov[X_i,X_j] = E_\pi[\theta^2] - E_\pi[\theta]E_\pi[\theta]
@@ -769,7 +769,7 @@ $$
 Cor[X_i, X_j] = \rho_{X_i,X_j} = \frac{Cov[X_i, X_j]}{\sigma_{X_i}\sigma_{X_j}}
 $$
 
-Where $\sigma$ is the standard deviation, that is the square root of the variance:
+Where $\sigma$ is the standard deviation, the square root of the variance:
 
 $$
 \sigma_X = \sqrt{\sigma^2_X}=\sqrt{Var[X]}\ge0
@@ -797,25 +797,31 @@ $$
 Cor[X_i, X_j] = 1 \iff  Cov[X_i, X_j] = \sigma_{X_i}\sigma_{X_j}
 $$
 
-Since $X_i$ and $X_j$ are Bernoulli random variables with the same parameter $\theta$ they have the same variance $Var(X_i) = Var(X_j) = \theta(1 - \theta)$:
+Since $X_i$ and $X_j$ are Bernoulli random variables with the same parameter $\theta$ they have the same variance $Var(X_i) = Var(X_j)$ and therefore we can simplify the condition as:
 
 $$
-\sigma_{X_i}\sigma_{X_j} = \sqrt{Var[X_i]}\sqrt{Var[X_j]} = 
-\sqrt{\theta(1 - \theta)} \sqrt{\theta(1 - \theta)} =
-\theta(1 - \theta)
+Cov[X_i, X_j] = \sigma_{X_i}\sigma_{X_j} = 
+\sqrt{Var[X_i]} \sqrt{Var[X_j]} =
+Var[X_i]
 $$
 
-Then we must impose:
+To find the variance of $X_i$ we must exploit the *Law of the Total Variance*:
 
 $$
-Cov[X_i, X_j] = \theta(1 - \theta)
+Var[X_i] = E_\pi[Var[X_i|\theta]] + Var_\pi[E[X_i | \theta]] =
+E_\pi[\theta(1-\theta)]+Var_\pi[\theta] = 
+E_\pi[\theta^2] - E_\pi[\theta] + Var_\pi[\theta]
 $$
 
-Recalling a result from the first part of this exercise, that is $Cov[X_i, X_j] = Var_\pi[\theta]$ what we are imposing is:
+We use this decomposition on the previous condition formula together with the previous result on the Covariance of two elements of the sequence:
 
 $$
-Var_\pi[\theta] = Var(X_i) = \theta(1 - \theta)
+Cov[X_i, X_j] = Var[X_i] \leftrightarrow
+Var_\pi[\theta] = E_\pi[\theta^2] - E_\pi[\theta] + Var_\pi[\theta] \leftrightarrow
+E_\pi[\theta] = E_\pi[\theta^2]
 $$
+
+The condition becomes that the first moment of the distribution of $\theta$ must be equal to its second moment.
 
 ------------------------------------------------------------------------
 
@@ -825,7 +831,25 @@ $$
 
 ### 4. Answer:
 
-\vspace{10.5cm}
+Exchangeability and  De Finetti's Theorem do not impose conditions on the type and shape of $\pi(\cdot)$, other than the fact that it has to be a distribution on $[0, 1]$, since $\theta$ represents the common success chance of the random variable in the sequence.
+
+Meanwhile the condition we impose to get $Cor[X_i X_j] = 1$ is very strong but somewhat difficult to understand. To get a clearer idea of what this condition means we can try to apply it into the definition of variance:
+
+$$
+Var_\pi[\theta] =
+E_\pi[\theta^2] - E_\pi[\theta]^2 =
+E_\pi[\theta](1-E_\pi[\theta])
+$$
+
+When used in this shape it is immediately recognizable the fact that a variance formula of the same form can be found in the Bernoulli distribution, for which the condition we found for the correlation equal to be equal to $1$ is true no matter what parameter $p \in [0,1]$ we choose, since:
+
+$$
+\theta \sim Ber(p), \;\;\;\;\;\; E[\theta] = p, \;\;\;\;\;\; Var[\theta]=p(1-p)
+$$
+
+A Bernoulli distribution also satisfies the fact that the distribution of $\theta$ has to be inside $[0, 1]$, but foregoes the continuity of the distribution.
+
+\vspace{4cm}
 
 ------------------------------------------------------------------------
 

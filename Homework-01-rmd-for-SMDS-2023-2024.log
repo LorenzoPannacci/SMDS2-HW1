@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3.31) (preloaded format=pdflatex 2024.4.18)  24 APR 2024 21:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3.31) (preloaded format=pdflatex 2024.4.18)  25 APR 2024 12:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1305,11 +1305,11 @@ L3 programming layer <2024-03-14>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 27484 strings out of 474423
- 492423 string characters out of 5755785
+ 27492 strings out of 474423
+ 492517 string characters out of 5755785
  1940496 words of memory out of 5000000
  49142 multiletter control sequences out of 15000+600000
- 642867 words of font info for 143 fonts, out of 8000000 for 9000
+ 643359 words of font info for 147 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,8n,87p,3957b,536s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <D:/File/MiKTeX/fonts/type1/nowacki/iwona/iwonab.pfb><D:/File/MiKTeX/fonts/ty
@@ -1324,7 +1324,7 @@ blic/lm/lmr7.pfb><D:/File/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><D:/File/MiKT
 eX/fonts/type1/public/lm/lmsy7.pfb><D:/File/MiKTeX/fonts/type1/public/lm/lmtk10
 .pfb><D:/File/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><D:/File/MiKTeX/fonts/typ
 e1/public/lm/lmtti10.pfb>
-Output written on Homework-01-rmd-for-SMDS-2023-2024.pdf (17 pages, 407524 byte
+Output written on Homework-01-rmd-for-SMDS-2023-2024.pdf (17 pages, 409749 byte
 s).
 PDF statistics:
  358 PDF objects out of 1000 (max. 8388607)
