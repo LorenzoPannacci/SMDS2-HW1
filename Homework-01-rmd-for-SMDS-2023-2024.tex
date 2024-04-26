@@ -226,7 +226,7 @@ to 1 instead states that the elements of the probability distribution
 must sum up to 1:
 
 \[
-\sum_{y,z\in\{1,2,3\}}Pr\{Y=y,Z=z\}=1
+\sum_{y,z \in \{ 1,2,3 \} } Pr \{ Y=y, Z=z \} = 1
 \]
 
 This also can be checked with a simple conditional statement:
@@ -286,7 +286,7 @@ matrix \(J\), and at the denominator the \emph{marginal distribution} of
 the value we condition on, defined as:
 
 \[
-Pr(Z = z) = \sum_yPr(Y = y, Z = z)
+Pr(Z = z) = \sum_y Pr(Y = y, Z = z)
 \]
 
 The base elements of this second formula are the joint distributions
@@ -566,8 +566,14 @@ of the vector into tuples:
 \NormalTok{    tuples }\OtherTok{=} \FunctionTok{index\_to\_tuple}\NormalTok{(indices)}
     \FunctionTok{return}\NormalTok{(tuples)}
 \NormalTok{\}}
+
+\FunctionTok{sample\_from\_J}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+[1] 1 2
+\end{verbatim}
 
 We can think of an alternative method that exploits the previously
 defined marginal and conditional distributions. We first sample \(Z\)
@@ -584,7 +590,7 @@ distribution conditioned on the result of the first sampling:
 
 \CommentTok{\# sampling from Y conditioned on Z}
 \NormalTok{sample\_from\_Y\_conditioned }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(z) \{}
-\NormalTok{    distro }\OtherTok{=} \FunctionTok{get\_conditional\_distro\_y}\NormalTok{(Y, z)}
+\NormalTok{    distro }\OtherTok{=} \FunctionTok{get\_conditional\_distro\_Y}\NormalTok{(Y, z)}
     \FunctionTok{sample}\NormalTok{(}\FunctionTok{length}\NormalTok{(distro), }\AttributeTok{size =} \DecValTok{1}\NormalTok{, }\AttributeTok{prob =}\NormalTok{ distro)}
 \NormalTok{\}}
 
@@ -594,8 +600,14 @@ distribution conditioned on the result of the first sampling:
 \NormalTok{    y }\OtherTok{=} \FunctionTok{sample\_from\_Y\_conditioned}\NormalTok{(z)}
     \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(y, z))}
 \NormalTok{\}}
+
+\FunctionTok{sample\_marginal\_conditional\_1}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+[1] 3 1
+\end{verbatim}
 
 Of curse we can also do the opposite, first sampling from the marginal
 distribution of \(Y\) and then from the conditional distribution of
@@ -611,7 +623,7 @@ distribution of \(Y\) and then from the conditional distribution of
 
 \CommentTok{\# sampling from Z conditioned on Y}
 \NormalTok{sample\_from\_Z\_conditioned }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(y) \{}
-\NormalTok{    distro }\OtherTok{=} \FunctionTok{get\_conditional\_distro\_z}\NormalTok{(y, Z)}
+\NormalTok{    distro }\OtherTok{=} \FunctionTok{get\_conditional\_distro\_Z}\NormalTok{(y, Z)}
     \FunctionTok{sample}\NormalTok{(}\FunctionTok{length}\NormalTok{(distro), }\AttributeTok{size =} \DecValTok{1}\NormalTok{, }\AttributeTok{prob =}\NormalTok{ distro)}
 \NormalTok{\}}
 
@@ -621,8 +633,14 @@ distribution of \(Y\) and then from the conditional distribution of
 \NormalTok{    z }\OtherTok{=} \FunctionTok{sample\_from\_Y\_conditioned}\NormalTok{(y)}
     \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(y, z))}
 \NormalTok{\}}
+
+\FunctionTok{sample\_marginal\_conditional\_2}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+[1] 1 1
+\end{verbatim}
 
 \bigskip
 
@@ -750,14 +768,16 @@ function and by definition \(\psi = \frac{1}{\theta}\), therefore:
 
 The parameters \(\alpha\) and \(\beta\) of this distribution are the
 same of the prior distribution of \(\theta\). From this we can calculate
-the mean and the variance \(psi\) according to the prior distribution:
+the mean and the variance of \(\psi\) according to its prior
+distribution:
 
 \[
 E[\psi] = \frac{\beta}{\alpha - 1} = \frac{1002.372}{3.007 - 1} = 499.438
 \]
 
 \[
-Var[\psi] = \frac{\beta^2}{(\alpha - 1)^2(\alpha - 2)} = \frac{1002.372^2}{(3.007 - 1)^2(3.007 - 2)} = 247704.352
+Var[\psi] = \frac{\beta^2}{(\alpha - 1)^2(\alpha - 2)} =
+\frac{1002.372^2}{(3.007 - 1)^2(3.007 - 2)} = 247704.352
 \]
 
 We can link this extremely high variance of the prior to the
@@ -786,13 +806,16 @@ f(y_i|\theta) = \theta e^{-\theta y_i}
 From which we can write the likelihood function:
 
 \[
-L_{\underline{Y}}(\theta) = \prod_{i=1}^{n}f(y_i|\theta) = \theta^n e^{-\theta \sum_{i=1}^{n} y_i}
+L_{\underline{Y}}(\theta) =
+\prod_{i=1}^{n}f(y_i | \theta) =
+\theta^n e^{-\theta \sum_{i=1}^{n} y_i}
 \]
 
 Now introduce the prior as a Gamma distribution:
 
 \[
-\pi(\theta) = \frac{\beta^{\alpha}}{\Gamma(\alpha)}\theta^{\alpha-1}e^{-\beta \theta}
+\pi(\theta) =
+\frac{\beta^{\alpha}}{\Gamma(\alpha)} \theta^{\alpha-1}e^{-\beta \theta}
 \]
 
 In this way we get the following posterior:
@@ -800,8 +823,8 @@ In this way we get the following posterior:
 \[
 \pi(\theta|\underline{Y}) \propto
 \pi(\theta)L_{\underline{Y}}(\theta) =
-\frac{\beta^{\alpha}}{\Gamma(\alpha)}\theta^{\alpha-1}e^{-\beta \theta} \theta^n e^{-\theta \sum_{i=1}^{n} y_i}
-\propto \theta^{\alpha-1}e^{-\beta\theta}\theta^ne^{-\theta \sum_{i=1}^{n} y_i}=\theta^{\alpha - 1 + n}e^{-\theta(\beta + \sum_{i=1}^{n} y_i)}
+\frac{\beta^{\alpha}}{\Gamma(\alpha)} \theta^{\alpha-1}e^{-\beta \theta} \theta^n e^{-\theta \sum_{i=1}^{n} y_i} \propto
+\theta^{\alpha-1} e^{-\beta\theta} \theta^n e^{-\theta \sum_{i=1}^{n} y_i} = \theta^{(\alpha + n) - 1} e^{-\theta(\beta + \sum_{i=1}^{n} y_i)}
 \]
 
 The posterior stays in the same family of distributions, with updated
@@ -883,16 +906,22 @@ Keeping in mind the mean and variance of the prior distribution of
 posterior distribution:
 
 \[
-E[\psi^*] = \frac{\beta^*}{\alpha^* - 1} = \frac{10601.37}{23.007 - 1} = 481.727
+E[\psi^*] =
+\frac{\beta^*}{\alpha^* - 1} =
+\frac{10601.37}{23.007 - 1} =
+481.727
 \]
 
 \[
-Var[\psi^*] = \frac{\beta^{*2}}{(\alpha^* - 1)^2(\alpha^* - 2)} = \frac{10601.37^2}{(23.007 - 1)^2(23.007 - 2)} = 11046.845
+Var[\psi^*] =
+\frac{\beta^{*2}}{(\alpha^* - 1)^2(\alpha^* - 2)} =
+\frac{10601.37^2}{(23.007 - 1)^2(23.007 - 2)} =
+11046.845
 \]
 
 What we can observe is that the mean of the distribution of \(\psi\) has
 gotten closer to the empirical mean of the observations and that the
-variance has decreased by around 22 times.
+variance has decreased by more than 20 times.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -1032,8 +1061,8 @@ When \(x_i = 0\) the element of the sum is equal to zero, we can then
 rewrite the formula by just leaving the case where \(x_i = 1\):
 
 \[
-E[X_i] = 1\int_{[0,1]} \theta^{1}(1 - \theta)^{1 - 1} \pi(\theta)d\theta
-= \int_{[0,1]} \theta \pi(\theta)d\theta
+E[X_i] = 1\int_{[0,1]} \theta^{1}(1 - \theta)^{1 - 1} \pi(\theta)d\theta =
+\int_{[0,1]} \theta \pi(\theta)d\theta
 \]
 
 The element on the right of the equation follows exactly the
@@ -1052,30 +1081,32 @@ variables:
 
 \[
 E[X_iX_j] = 
-\sum_{x_i=0}^1\sum_{x_j=0}^1x_ix_jPr(X_i=x_i,X_j=x_j)
+\sum_{x_i=0}^1 \sum_{x_j=0}^1 x_i x_j Pr(X_i=x_i,X_j=x_j)
 \]
 
 Still as before we write the formula from De Finetti's Theorem, this
 time fixing \(n = 2\). We also to impose \(i \neq j\):
 
 \[
-Pr(X_i=x_i,X_j=x_j) = \int_{[0,1]} \theta^{x_i}(1 - \theta)^{1 - x_i} \theta^{x_j}(1 - \theta)^{1 - x_j} \pi(\theta)d\theta
-= \int_{[0,1]} \theta^{x_i + x_j}(1 - \theta)^{2 - x_i - x_j} \pi(\theta)d\theta
+Pr(X_i=x_i,X_j=x_j) =
+\int_{[0,1]} \theta^{x_i}(1 - \theta)^{1 - x_i} \theta^{x_j}(1 - \theta)^{1 - x_j} \pi(\theta) d\theta =
+\int_{[0,1]} \theta^{x_i + x_j}(1 - \theta)^{2 - x_i - x_j} \pi(\theta)d\theta
 \]
 
 Substituting this into the expected value formula get us:
 
 \[
 E[X_iX_j] =
-\sum_{x_i=0}^1\sum_{x_j=0}^1x_ix_j\int_{[0,1]} \theta^{x_i + x_j}(1 - \theta)^{2 - x_i - x_j} \pi(\theta)d\theta
+\sum_{x_i=0}^1 \sum_{x_j=0}^1 x_i x_j \int_{[0,1]} \theta^{x_i + x_j}(1 - \theta)^{2 - x_i - x_j} \pi(\theta)d\theta
 \]
 
 However the only element of those summations that is not zero is the one
 where \(x_i = 1\) and \(x_j = 1\):
 
 \[
-E[X_iX_j] = \int_{[0,1]} \theta^{2}(1 - \theta)^{0} \pi(\theta)d\theta
-= \int_{[0,1]} \theta^{2} \pi(\theta)d\theta
+E[X_iX_j] =
+\int_{[0,1]} \theta^{2}(1 - \theta)^{0} \pi(\theta)d\theta =
+\int_{[0,1]} \theta^{2} \pi(\theta)d\theta
 \]
 
 Which is the \emph{definition of the second moment} of \(\theta\),
@@ -1091,7 +1122,7 @@ Let's recall the definition of covariance between two random variables
 \(X_i\) and \(X_j\):
 
 \[
-Cov[X_i,X_j] = E[X_iX_j]-E[X_i]E[X_j]
+Cov[X_i,X_j] = E[X_iX_j] - E[X_i] E[X_j]
 \]
 
 Let's also recall the definition of variance of a random variable \(A\):
@@ -1112,9 +1143,10 @@ And by substituting them we understand they follow the \emph{definition
 of variance} of \(\theta\):
 
 \[
-Cov[X_i,X_j] = E_\pi[\theta^2] - E_\pi[\theta]E_\pi[\theta]
-= E_\pi[\theta^2] - E_\pi[\theta]^2
-= Var_\pi[\theta]
+Cov[X_i,X_j] =
+E_\pi[\theta^2] - E_\pi[\theta]E_\pi[\theta] =
+E_\pi[\theta^2] - E_\pi[\theta]^2 =
+Var_\pi[\theta]
 \]
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
@@ -1133,14 +1165,17 @@ Let's recall the definition of correlation between two random variables
 \(X_i\) and \(X_j\), that is the Pearson Correlation Coefficient:
 
 \[
-Cor[X_i, X_j] = \rho_{X_i,X_j} = \frac{Cov[X_i, X_j]}{\sigma_{X_i}\sigma_{X_j}}
+Cor[X_i, X_j] =
+\rho_{X_i,X_j} =
+\frac{Cov[X_i, X_j]}{\sigma_{X_i}\sigma_{X_j}}
 \]
 
 Where \(\sigma\) is the standard deviation, the square root of the
 variance:
 
 \[
-\sigma_X = \sqrt{\sigma^2_X}=\sqrt{Var[X]}\ge0
+\sigma_X =
+\sqrt{\sigma^2_X}=\sqrt{Var[X]} \ge 0
 \]
 
 The denominator of the correlation formula is always non-negative as it
@@ -1149,7 +1184,8 @@ non-negative. We have already studied the numerator in the previous
 points of this exercise and we concluded that:
 
 \[
-Cov[X_i, X_j] = Var_\pi[\theta] \ge 0
+Cov[X_i, X_j] =
+Var_\pi[\theta] \ge 0
 \]
 
 We know that the variance is always non-negative, therefore also the
@@ -1174,7 +1210,8 @@ value of correlation equal to \(1\) we need the numerator and the
 denominator of the formula to be the same:
 
 \[
-Cor[X_i, X_j] = 1 \iff  Cov[X_i, X_j] = \sigma_{X_i}\sigma_{X_j}
+Cor[X_i, X_j] = 1 \iff
+Cov[X_i, X_j] = \sigma_{X_i}\sigma_{X_j}
 \]
 
 Since \(X_i\) and \(X_j\) are Bernoulli random variables with the same
@@ -1196,9 +1233,8 @@ E_\pi[\theta(1-\theta)]+Var_\pi[\theta] =
 E_\pi[\theta^2] - E_\pi[\theta] + Var_\pi[\theta]
 \]
 
-We use this decomposition on the previous condition formula together
-with the previous result on the Covariance of two elements of the
-sequence:
+We use this decomposition together with the previous result on the
+Covariance of two elements of the sequence:
 
 \[
 Cov[X_i, X_j] = Var[X_i] \leftrightarrow
@@ -1206,8 +1242,8 @@ Var_\pi[\theta] = E_\pi[\theta^2] - E_\pi[\theta] + Var_\pi[\theta] \leftrightar
 E_\pi[\theta] = E_\pi[\theta^2]
 \]
 
-The condition becomes that the first moment of the distribution of
-\(\theta\) must be equal to its second moment.
+The condition becomes that \emph{the first moment of the distribution of
+\(\theta\) must be equal to its second moment}.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -1238,20 +1274,91 @@ E_\pi[\theta](1-E_\pi[\theta])
 \]
 
 When used in this shape it is immediately recognizable the fact that a
-variance formula of the same form can be found in the Bernoulli
-distribution, for which the condition we found for the correlation equal
-to be equal to \(1\) is true no matter what parameter \(p \in [0,1]\) we
+variance formula of the same form can be found in the \(Bernoulli\)
+distribution, for which the condition we found for the correlation to be
+equal to \(1\) is true no matter what parameter \(p \in [0,1]\) we
 choose, since:
 
 \[
-\theta \sim Ber(p), \;\;\;\;\;\; E[\theta] = p, \;\;\;\;\;\; Var[\theta]=p(1-p)
+\theta \sim Ber(p), \;\;\;\;\;\;
+E[\theta] = p, \;\;\;\;\;\;
+Var[\theta]=p(1-p)
 \]
 
 A Bernoulli distribution also satisfies the fact that the distribution
 of \(\theta\) has to be inside \([0, 1]\), but foregoes the continuity
-of the distribution.
+of the distribution. We can try to impose the condition on a
+\(Beta(\alpha, \beta)\) distribution, since it is defined in the
+interval \([0, 1]\):
 
-\vspace{4cm}
+\[
+\theta \sim Beta(\alpha, \beta), \;\;\;\;\;\;
+E[\theta] = \frac{\alpha}{\alpha + \beta}, \;\;\;\;\;\;
+Var[\theta] = \frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}
+\]
+
+\[
+Var[\theta] = E[\theta](1-E[\theta]) \rightarrow
+\frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)} =
+\frac{\alpha}{\alpha + \beta} \left( 1 - \frac{\alpha}{\alpha + \beta}\right) \rightarrow
+\frac{\beta}{\alpha+\beta+1} =
+\beta \rightarrow
+\alpha = - \beta
+\]
+
+But since \(\alpha, \beta > 0\) this is impossible. It is however
+possible to prove that when \(\alpha\) and \(\beta\) approach zero the
+\(Beta\) distribution tends to the \(Bernoulli\) distribution,
+reinforcing the point made above.
+
+We provide below a visual proof by showing that for increasingly smaller
+values for the parameters \(\alpha\) and \(\beta\) the CDF of the
+\(Beta\) becomes more and more similar to the \(Bernoulli\) one:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_bernoulli\_and\_beta }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(value) \{}
+\NormalTok{    plot\_title }\OtherTok{\textless{}{-}} \FunctionTok{bquote}\NormalTok{(}\StringTok{"CDF of Bernoulli and Beta ("} \SpecialCharTok{*}
+\NormalTok{        alpha }\SpecialCharTok{*} \StringTok{"="} \SpecialCharTok{*}\NormalTok{ beta }\SpecialCharTok{*} \StringTok{"="} \SpecialCharTok{*}\NormalTok{ .(value) }\SpecialCharTok{*} \StringTok{")"}\NormalTok{)}
+\NormalTok{    x }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{1e{-}04}\NormalTok{, }\DecValTok{1}\NormalTok{, }\AttributeTok{by =} \FloatTok{1e{-}04}\NormalTok{)}
+
+\NormalTok{    cdf\_bernoulli }\OtherTok{\textless{}{-}} \FunctionTok{pbinom}\NormalTok{(x, }\AttributeTok{size =} \DecValTok{1}\NormalTok{, }\AttributeTok{prob =} \FloatTok{0.5}\NormalTok{)}
+\NormalTok{    cdf\_beta }\OtherTok{\textless{}{-}} \FunctionTok{pbeta}\NormalTok{(x, }\AttributeTok{shape1 =}\NormalTok{ value, }\AttributeTok{shape2 =}\NormalTok{ value)}
+
+    \FunctionTok{plot}\NormalTok{(x, cdf\_bernoulli, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"X"}\NormalTok{,}
+        \AttributeTok{ylab =} \StringTok{"CDF"}\NormalTok{, }\AttributeTok{main =}\NormalTok{ plot\_title, }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}
+            \DecValTok{1}\NormalTok{), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
+    \FunctionTok{lines}\NormalTok{(x, cdf\_beta, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+
+    \FunctionTok{legend}\NormalTok{(}\StringTok{"bottomright"}\NormalTok{, }\AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"Bernoulli"}\NormalTok{, }\StringTok{"Beta"}\NormalTok{),}
+        \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\StringTok{"red"}\NormalTok{), }\AttributeTok{lty =} \DecValTok{1}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot\_bernoulli\_and\_beta}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{Homework-01-rmd-for-SMDS-2023-2024_files/figure-latex/unnamed-chunk-27-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot\_bernoulli\_and\_beta}\NormalTok{(}\FloatTok{0.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{Homework-01-rmd-for-SMDS-2023-2024_files/figure-latex/unnamed-chunk-28-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot\_bernoulli\_and\_beta}\NormalTok{(}\FloatTok{0.001}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{Homework-01-rmd-for-SMDS-2023-2024_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -1259,7 +1366,7 @@ of the distribution.
 2023-2024
 
 \begin{verbatim}
-Last update by LT: Thu Apr 25 12:32:56 2024
+Last update by LT: Fri Apr 26 18:53:02 2024
 \end{verbatim}
 
 \end{document}

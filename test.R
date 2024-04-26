@@ -214,3 +214,44 @@ curve(dexp(x, rate = rate_parameter), col = "red", lwd = 2, add = TRUE)
 data = c(1, 13, 27, 43, 73, 75, 154, 196, 220, 297, 344, 610, 734, 783, 796, 845, 859, 992, 1066, 1471)
 
 mean(data)
+
+########
+
+plot_bernoulli_and_beta = function(value){
+  plot_title <- bquote("CDF of Bernoulli and Beta (" * alpha * "=" * beta * "=" * .(value) * ")")  
+  x <- seq(-0.0001, 1, by = 0.0001)
+  
+  cdf_bernoulli <- pbinom(x, size = 1, prob = 0.5)
+  cdf_beta <- pbeta(x, shape1 = value, shape2 = value)
+  
+  plot(x, cdf_bernoulli, type = "l", lwd = 2, xlab = "X", ylab = "CDF", 
+       main = plot_title, xlim = c(0, 1), ylim = c(0, 1),
+       col = "blue")
+  lines(x, cdf_beta, col = "red", lwd = 2)
+  
+  legend("bottomright", legend = c("Bernoulli", "Beta"), col = c("blue", "red"),
+         lty = 1, lwd = 2)
+}
+
+plot_bernoulli_and_beta(1)
+plot_bernoulli_and_beta(0.01)
+plot_bernoulli_and_beta(0.0001)
+
+# Example data
+x <- 1:5
+y <- c(2, 3, 5, 7, 11)
+z <- 2
+
+# Create plot title with the value of z
+plot_title <- bquote("CDF of Bernoulli and Beta (" * alpha * "=" * beta * "=" * .(value))
+
+# Plot
+plot(x, y, main = plot_title,
+     xlab = expression(alpha), ylab = expression(beta))
+
+# Save plot as PDF
+pdf("plot.pdf")
+plot(x, y, main = plot_title,
+     xlab = expression(alpha), ylab = expression(beta))
+dev.off()
+
